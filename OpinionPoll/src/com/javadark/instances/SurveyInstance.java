@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class SurveyInstance implements Serializable {
     private static final long serialVersionUID = 1L;
-    //It's a primary key which should be inserted into DB
+    //It's a primary key which should be inserted into DB. *** It must be changed
     private final int id;
     private String name;
     //Optional description of this Survey
