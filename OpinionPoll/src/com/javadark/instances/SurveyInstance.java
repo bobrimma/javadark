@@ -28,7 +28,7 @@ public class SurveyInstance implements Serializable {
     //This optional field is a tags holder that allows survey's tag search  
     private Set<String> tagList = Collections.emptySet();
     //This field keeps all options of this Survey
-    private final List<OpinionInstance> answers = new ArrayList<>();
+    private final List<OpinionInstance> opinions = new ArrayList<>();
     //This field keeps users IDs which has voted
     private final Set<Integer> subscribers = new HashSet<>();
     
@@ -49,13 +49,18 @@ public class SurveyInstance implements Serializable {
     {
 	if (null != newOption)
 	{
-	    OpinionInstance ans = new OpinionInstance(newOption, answers.size(), this.id);
-	    answers.add(ans);
+	    OpinionInstance ans = new OpinionInstance(newOption, opinions.size(), this.id);
+	    opinions.add(ans);
 	    return true;
 	}
 	return false;
     }
     
+    /**
+     * Vote for the particular opinion option
+     * @param option
+     * @param userId
+     */
     public void vote (OpinionInstance option, int userId)
     {
 	if (!subscribers.contains((int) userId))
@@ -78,48 +83,80 @@ public class SurveyInstance implements Serializable {
 	tagList.remove("");
     }
     
+    /**
+     * Get searching tags
+     * @return
+     */
     public String getTags()
     {
 	return (!tagList.isEmpty())? tagList.toString() : null;
     }
     
+    /**
+     * Get survey's id
+     * @return
+     */
     public int getId()
     {
 	return id;
     }
-
+    
+    /**
+     * get survey's name
+     * @return
+     */
     public String getName()
     {
 	return name;
     }
 
+    /**
+     * Set surveys name
+     * @param name
+     */
     public void setName(String name)
     {
 	this.name = name;
     }
 
+    /**
+     * Get surveys description
+     * @return
+     */
     public String getDescription()
     {
 	return description;
     }
-
+    
+    /**
+     * Set survey's description
+     * @param description
+     */
     public void setDescription(String description)
     {
 	this.description = description;
     }
 
+    /**
+     * Get survey author's id
+     * @return
+     */
     public int getAuthorId()
     {
 	return authorId;
     }
 
+    /**
+     * Get creation date of this survey
+     * @return
+     */
     public Date getCreationDate()
     {
 	return creationDate;
     }
-    public List<OpinionInstance> getAnswersList()
+    public List<OpinionInstance> getOpinionList()
     {
-	return answers;
+	return opinions;
     }
     
 
@@ -197,7 +234,7 @@ public class SurveyInstance implements Serializable {
 	System.out.println("Author id: " + inst.getAuthorId());
 	System.out.println("Tags: " + inst.getTags());
 	System.out.println("Date: " + inst.getCreationDate());
-	for (OpinionInstance ans : inst.getAnswersList())
+	for (OpinionInstance ans : inst.getOpinionList())
 	    System.out.println("Option: "+ans.id + " Description: " + ans.getOpinionDescription() + " Votes: " + ans.getVotesCount());
 	System.out.println("=====================");
     }
@@ -233,13 +270,13 @@ public class SurveyInstance implements Serializable {
 	//Random votings
 	for (SurveyInstance surveyInstance : instSet)
 	{
-	    if (!surveyInstance.getAnswersList().isEmpty())
+	    if (!surveyInstance.getOpinionList().isEmpty())
 	    {
 		for (int j = 0; j < 50; j++)
 		{
-		    OpinionInstance ans = surveyInstance.getAnswersList()
+		    OpinionInstance ans = surveyInstance.getOpinionList()
 			    .get(rand.nextInt(surveyInstance
-				    .getAnswersList().size()));
+				    .getOpinionList().size()));
 		    surveyInstance.vote(ans, rand.nextInt(1000));
 		}
 	    }
