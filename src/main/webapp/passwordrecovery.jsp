@@ -1,0 +1,41 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@ include file="/jspf/link.jspf"%>
+<title>Password recovery</title>
+</head>
+<style type="text/css">
+body {
+	padding-top: 100px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
+
+input {
+	width: 270px;
+}
+
+</style>
+<body>
+	<div class="container">
+		<form class="form-signin">
+			<legend> Forgot password? Don't worry! </legend>
+			<label class="control-label" for="username">Username</label>
+			<div class="controls">
+				<input type="text" id="username" placeholder="username">
+			</div>
+			<label class="control-label" for="email">Enter e-mail you
+				registered for</label>
+			<div class="controls">
+				<input type="text" id="email" placeholder="email">
+			</div>
+			<div class="controls">
+				<button class="btn btn-primary" type="submit">Recover password</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
