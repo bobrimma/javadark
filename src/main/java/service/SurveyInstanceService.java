@@ -35,7 +35,7 @@ public class SurveyInstanceService {
         }
 
         @Transactional
-        public void removeInstance(Integer id) {
+        public void removeInstance(int id) {
 
             instanceDAO.removeSurveyInstance(id);
 
