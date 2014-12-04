@@ -1,6 +1,7 @@
 package main.java.domain;
 import java.io.Serializable;
 import java.util.*;
+
 import javax.persistence.*;
 
 /**
@@ -14,7 +15,7 @@ public final class QuestionInstance implements JDInstance, Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column (name = "id")
+    @Column (name = "id", unique = true, nullable = false, length = 11)
     @GeneratedValue
     private int id;
     
@@ -25,38 +26,15 @@ public final class QuestionInstance implements JDInstance, Serializable {
     @Column (name = "description")
     private String description;
     
-    @Column (name = "id_survey")
+    @JoinColumn (name = "id_survey")
+    @Transient
     private int surveyId;
     
     //This field keeps all options of this question
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_question")
     private final List<AnswerInstance> answers = new ArrayList<>();
-    
-    public QuestionInstance(String name, int surveyId)
-    {
-        this.name = name;
-        this.surveyId = surveyId;
-    }
-    
-    public QuestionInstance(String name, int id, int surveyId)
-    {
-        this(name, surveyId);
-        this.id = id;
-    }
 
-    /**
-     * Add new optionally answer to the survey
-     * @param newOption
-     * @return
-     */
-    public boolean addNewAnswer(String newOption)
-    {
-        if (null != newOption)
-        {
-            AnswerInstance ans = new AnswerInstance(newOption, answers.size(), this.id);
-            return answers.add(ans);
-        }
-        return false;
-    }
 
     /**
      * Add new optionally answer to the question
