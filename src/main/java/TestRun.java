@@ -45,7 +45,7 @@ public class TestRun {
 //	JDInstanceDAO.addSurveyInstance(survey);
 	for (int i = 0; i < 5; i++)
 	{
-	    JDInstanceDAO.addSurveyInstance(createPoll());
+	    JDInstanceDAO.saveIntoDB(createPoll());
 	}
 	HibernateUtils.getSessionFactory().close();
     }

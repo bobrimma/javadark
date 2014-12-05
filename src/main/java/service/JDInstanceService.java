@@ -22,7 +22,7 @@ public class JDInstanceService {
         @Transactional
         public void addInstance(JDInstance instance) {
 
-            JDInstanceDAO.addSurveyInstance(instance);
+            JDInstanceDAO.saveIntoDB(instance);
 
         }
 

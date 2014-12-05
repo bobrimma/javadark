@@ -19,7 +19,7 @@ public class JDInstanceDAO {
         @Autowired
         private static SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
-        public static void addSurveyInstance(JDInstance instance) {
+        public static void saveIntoDB(JDInstance instance) {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
             session.save(instance);
