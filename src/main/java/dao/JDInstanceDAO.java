@@ -1,6 +1,9 @@
 package main.java.dao;
 
 import main.java.domain.JDInstance;
+import main.java.utils.HibernateUtils;
+
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,20 +17,23 @@ import java.util.List;
 public class JDInstanceDAO {
 
         @Autowired
-        private SessionFactory sessionFactory; //it seems nullpointerexception here
+        private static SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
-        public void addSurveyInstance(JDInstance instance) {
-            sessionFactory.getCurrentSession().save(instance);
+        public static void saveIntoDB(JDInstance instance) {
+            Session session = sessionFactory.getCurrentSession();
+            session.beginTransaction();
+            session.save(instance);
+            session.getTransaction().commit();
         }
 
         @SuppressWarnings("unchecked")
-        public List<JDInstance> listSurveyInstance(String from) {
+        public static List<JDInstance> listSurveyInstance(String from) {
 
             return sessionFactory.getCurrentSession().createQuery("from " + from)
                     .list();
         }
 
-        public void removeSurveyInstance(int id, Class<JDInstance> instanceClass) {
+        public static void removeSurveyInstance(int id, Class<JDInstance> instanceClass) {
             JDInstance instance = (JDInstance) sessionFactory.getCurrentSession().load(
                     instanceClass, id);
             if (null != instance) {

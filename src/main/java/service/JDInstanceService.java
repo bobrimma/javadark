@@ -22,20 +22,20 @@ public class JDInstanceService {
         @Transactional
         public void addInstance(JDInstance instance) {
 
-            instanceDAO.addSurveyInstance(instance);
+            JDInstanceDAO.saveIntoDB(instance);
 
         }
 
         @Transactional
         public List<JDInstance> listInstance(String table) {
 
-            return instanceDAO.listSurveyInstance(table);
+            return JDInstanceDAO.listSurveyInstance(table);
         }
 
         @Transactional
         public void removeInstance(int id, Class<JDInstance> instanceClass) {
 
-            instanceDAO.removeSurveyInstance(id, instanceClass);
+            JDInstanceDAO.removeSurveyInstance(id, instanceClass);
 
         }
     }

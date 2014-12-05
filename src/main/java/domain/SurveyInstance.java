@@ -9,19 +9,21 @@ import javax.persistence.*;
  * Created by Admin on 30.11.14.
  */
 @Entity
-@Table(name = "SurveyInstances")
+@Table(name = "Surveys")
 public class SurveyInstance implements JDInstance, Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column(name = "id")
+    @Column(name = "id", unique = true, nullable = false, length = 11)
     @GeneratedValue
     private int id;
     @Column(name = "name")
     private  String name;
-    @Column (name = "published")
+    @Column (name = "published", columnDefinition = "bit(1) default false")
     private boolean isPublished;
-    //? @Column(name = "SurveyInstance")
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_survey")
     private final List<QuestionInstance> questions = new ArrayList<>();
 
 
@@ -35,16 +37,6 @@ public class SurveyInstance implements JDInstance, Serializable {
 
         return questions;
 
-    }
-
-    public boolean addQuestion (String question) {
-	if (null != question)
-	{
-	    QuestionInstance que = new QuestionInstance(question, questions.size(), this.id);
-	    questions.add(que);
-	    return true;
-	}
-	return false;
     }
     
     /**
