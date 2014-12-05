@@ -26,7 +26,7 @@ public final class QuestionInstance implements JDInstance, Serializable {
     @Column (name = "description")
     private String description;
     
-    @Column (name = "multianswer")
+    @Column (name = "multianswer", columnDefinition = "bit(1) default false")
     private boolean allowMultipleAnswers;
     
     @JoinColumn (name = "id_survey")
@@ -46,6 +46,8 @@ public final class QuestionInstance implements JDInstance, Serializable {
      */
     public boolean addAnswer(AnswerInstance answer)
     {
+	if (!allowMultipleAnswers && answers.size() > 0)
+	    return false;
 	return answers.add(answer);
     }
     

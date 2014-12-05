@@ -19,7 +19,7 @@ public class SurveyInstance implements JDInstance, Serializable {
     private int id;
     @Column(name = "name")
     private  String name;
-    @Column (name = "published")
+    @Column (name = "published", columnDefinition = "bit(1) default false")
     private boolean isPublished;
     
     @OneToMany(cascade = CascadeType.ALL)

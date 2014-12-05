@@ -24,6 +24,7 @@ public class TestRun {
 	    QuestionInstance question = new QuestionInstance();
 	    question.setName("question");
 	    question.setDescription("descr");
+	    question.setAllowMultipleAnswers(rand.nextBoolean());
 	    for (int i = 0; i < rand.nextInt(5); i++)
 	    {
 		AnswerInstance answer = new AnswerInstance();
