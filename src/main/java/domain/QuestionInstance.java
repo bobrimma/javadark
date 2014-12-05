@@ -26,6 +26,9 @@ public final class QuestionInstance implements JDInstance, Serializable {
     @Column (name = "description")
     private String description;
     
+    @Column (name = "multianswer")
+    private boolean allowMultipleAnswers;
+    
     @JoinColumn (name = "id_survey")
     @Transient
     private int surveyId;
@@ -90,10 +93,31 @@ public final class QuestionInstance implements JDInstance, Serializable {
     {
         this.description = description;
     }
-
+    /**
+     * Get full answers list
+     * @return
+     */
     public List<AnswerInstance> getAnswerList()
     {
         return answers;
+    }
+
+    /**
+     * Check if able to get more than one answer per one question
+     * @return
+     */
+    public boolean isAllowMultipleAnswers()
+    {
+	return allowMultipleAnswers;
+    }
+
+    /**
+     * Set able to give more than one answer to one question
+     * @param Boolean allowMultipleAnswers
+     */
+    public void setAllowMultipleAnswers(boolean allowMultipleAnswers)
+    {
+	this.allowMultipleAnswers = allowMultipleAnswers;
     }
     
 
