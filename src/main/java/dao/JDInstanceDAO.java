@@ -19,11 +19,25 @@ public class JDInstanceDAO {
         @Autowired
         private static SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
-        public static void saveIntoDB(JDInstance instance) {
-            Session session = sessionFactory.getCurrentSession();
+        public static synchronized void saveIntoDB(JDInstance instance) {
+            Session session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(instance);
             session.getTransaction().commit();
+            session.close();
+        }
+        
+        /**
+         * Read and get JDInstance object from database where id = object's id;
+         * @param instanceClass
+         * @param id
+         * @return
+         */
+        public static <T extends JDInstance> JDInstance retrieveFromDB(Class<T> instanceClass, int id)
+        {
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            return (JDInstance) session.get(instanceClass, id);
         }
 
         @SuppressWarnings("unchecked")
