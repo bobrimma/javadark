@@ -4,6 +4,7 @@ import java.util.Random;
 
 import main.java.dao.JDInstanceDAO;
 import main.java.domain.AnswerInstance;
+import main.java.domain.JDInstance;
 import main.java.domain.QuestionInstance;
 import main.java.domain.SurveyInstance;
 import main.java.utils.HibernateUtils;
@@ -47,6 +48,13 @@ public class TestRun {
 	for (int i = 0; i < 5; i++)
 	{
 	    JDInstanceDAO.saveIntoDB(createPoll());
+	}
+	//retrieve objects
+	JDInstance inst = null;
+	for (int i = 1; 
+		(inst = JDInstanceDAO.retrieveFromDB(SurveyInstance.class, i)) != null; i++)
+	{
+	    System.out.println(inst);
 	}
 	HibernateUtils.getSessionFactory().close();
     }

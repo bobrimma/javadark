@@ -66,5 +66,11 @@ public class SurveyInstance implements JDInstance, Serializable {
     {
 	this.isPublished = isPublished;
     }
+    
+    public String toString()
+    {
+	return String.format("Survey id = %d \nname = %s \nis published = %b \nquestions count = %d", 
+		this.id, this.name, this.isPublished, this.questions.size());
+    }
 
 }
