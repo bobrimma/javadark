@@ -34,7 +34,7 @@
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/javadark</property>
         <property name="connection.username">root</property>
-        <property name="connection.password">Astra</property>
+        <property name="connection.password">password</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">2</property>
@@ -49,7 +49,7 @@
         <property name="show_sql">true</property>
 
         <!-- Drop and re-create the database schema on startup -->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create</property>
         
         <property name="hibernate.current_session_context_class">thread</property>
 
@@ -58,6 +58,8 @@
         <mapping class="main.java.domain.QuestionInstance"/>
         <mapping class="main.java.domain.AnswerInstance"/>
         <mapping class="main.java.domain.OpinionInstance"/>
+        <mapping class="main.java.domain.UserInstance"/>
+        <mapping class="main.java.domain.UserPollInstance"/>
         
         
 

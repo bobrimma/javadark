@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,25 +20,39 @@ public class JDInstanceDAO {
         @Autowired
         private static SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
-        public static synchronized void saveIntoDB(JDInstance instance) {
+        @Transactional
+        public static void saveIntoDB(JDInstance instance) {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(instance);
             session.getTransaction().commit();
-            session.close();
+            if (session.isOpen())
+	    {
+		session.close();
+	    }
         }
         
         /**
-         * Read and get JDInstance object from database where id = object's id;
+         * Read and get JDInstance object from database where id = object's id 
+         * and id must have required class type - the same as in DB;
          * @param instanceClass
-         * @param id
+         * @param id (requires only Integer or Long)
          * @return
          */
-        public static <T extends JDInstance> JDInstance retrieveFromDB(Class<T> instanceClass, int id)
+        public static <T extends JDInstance, N extends Number> JDInstance retrieveFromDB(Class<T> instanceClass, N id)
         {
+            JDInstance inst = null;
+            if ((id instanceof Double) || (id instanceof Float))
+        	throw new UnsupportedOperationException("Current argument's class is: "+
+            id.getClass().getCanonicalName() + ". Argument 'id' requires only Integer or Long type");
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            return (JDInstance) session.get(instanceClass, id);
+            inst = (JDInstance) session.get(instanceClass, id);
+            if (session.isOpen())
+	    {
+		session.close();
+	    }
+            return inst;
         }
 
         @SuppressWarnings("unchecked")
