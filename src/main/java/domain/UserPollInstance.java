@@ -11,15 +11,18 @@ import javax.persistence.*;
 @Table(name = "User_polls")
 public class UserPollInstance implements JDInstance {
     private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue
+    @Column(nullable = false, unique = true, length = 11)
+    private int id;
+    
     @ManyToOne @JoinColumn(name = "id_user")
     private UserInstance user;
     @ManyToOne @JoinColumn(name = "id_survey")
     private SurveyInstance survey;
     @Column(name = "finished")
     private boolean isFinished;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
     
     public UserPollInstance(){}
     public UserPollInstance(UserInstance user, SurveyInstance survey, boolean isFinished)

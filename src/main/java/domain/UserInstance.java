@@ -13,13 +13,20 @@ public class UserInstance implements JDInstance {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
+    @Column(nullable = false, unique = true, length = 11)
     private int id;
-    @Column(name = "login")
+    
+    @Column(name = "login", unique = true, nullable = false, columnDefinition = "CHAR(32) not null")
     private String login;
+    @Column(nullable = false)
     private char[]password;
+    @Column(nullable = false, columnDefinition = "CHAR(32)")
     private String firstName;
+    @Column(nullable = false, columnDefinition = "CHAR(32)")
     private String lastName;
+    @Column(nullable = false, unique = true, columnDefinition = "CHAR(50) not null")
     private String email;
+    @Column (name = "admin", columnDefinition = "bit(1) default false")
     private boolean isAdmin;
     
     public UserInstance(){}
