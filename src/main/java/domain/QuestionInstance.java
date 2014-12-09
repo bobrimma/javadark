@@ -13,6 +13,9 @@ import javax.persistence.*;
 @Table(name = "Questions")
 public final class QuestionInstance implements JDInstance, Serializable {
     private static final long serialVersionUID = 1L;
+    @ManyToOne
+    @JoinColumn (name = "id_survey")
+    private SurveyInstance survey;
     
     @Id
     @Column (name = "id", unique = true, nullable = false, length = 11)
@@ -29,15 +32,23 @@ public final class QuestionInstance implements JDInstance, Serializable {
     @Column (name = "multianswer", columnDefinition = "bit(1) default false")
     private boolean allowMultipleAnswers;
     
-    @JoinColumn (name = "id_survey")
+//    @ManyToOne
+//    @JoinColumn (name = "id_survey")
     @Transient
     private int surveyId;
     
     //This field keeps all options of this question
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_question")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", fetch = FetchType.EAGER)
     private final List<AnswerInstance> answers = new ArrayList<>();
 
+    public QuestionInstance()
+    {
+	// TODO Auto-generated constructor stub
+    }
+    public QuestionInstance(SurveyInstance survey)
+    {
+	this.survey = survey;
+    }
 
     /**
      * Add new optionally answer to the question
@@ -46,8 +57,6 @@ public final class QuestionInstance implements JDInstance, Serializable {
      */
     public boolean addAnswer(AnswerInstance answer)
     {
-	if (!allowMultipleAnswers && answers.size() > 0)
-	    return false;
 	return answers.add(answer);
     }
     
@@ -120,6 +129,13 @@ public final class QuestionInstance implements JDInstance, Serializable {
     public void setAllowMultipleAnswers(boolean allowMultipleAnswers)
     {
 	this.allowMultipleAnswers = allowMultipleAnswers;
+    }
+    @Override
+    public String toString()
+    {
+	return "QuestionInstance [survey=" + survey + ", id=" + id + ", name="
+		+ name + ", description=" + description
+		+ ", allowMultipleAnswers=" + allowMultipleAnswers + "]";
     }
     
 

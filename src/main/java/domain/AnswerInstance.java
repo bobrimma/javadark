@@ -13,24 +13,35 @@ import javax.persistence.*;
 public final class AnswerInstance implements JDInstance, Serializable{
 
     private static final long serialVersionUID = -4814539795984372914L;
+    @ManyToOne
+    @JoinColumn (name = "id_question")
+    private QuestionInstance question;
     @Id
     @GeneratedValue
     @Column (name = "id", unique = true, nullable = false, length = 11)
     private int id;
-    @JoinColumn (name = "id_question")
+    
     @Transient
     private int questionId;
     @Column (name = "description")
-    private String opinionDescription;
+    private String answerDescription;
+    @Column(name = "correct", columnDefinition = "bit(1) default false")
+    private boolean isCorrect;
+    
+    public AnswerInstance(){}
+    public AnswerInstance(QuestionInstance question)
+    {
+	this.question = question;
+    }
 
     public String getAnswerDescription()
     {
-        return opinionDescription;
+        return answerDescription;
     }
 
     public void setAnswerDescription(String opinionDescription)
     {
-        this.opinionDescription = opinionDescription;
+        this.answerDescription = opinionDescription;
     }
 
     public boolean equals(Object ob)
@@ -46,6 +57,21 @@ public final class AnswerInstance implements JDInstance, Serializable{
     public int getId()
     {
 	return id;
+    }
+    public boolean isCorrect()
+    {
+	return isCorrect;
+    }
+    public void setCorrect(boolean isCorrect)
+    {
+	this.isCorrect = isCorrect;
+    }
+    @Override
+    public String toString()
+    {
+	return "AnswerInstance [question=" + question + ", id=" + id
+		+ ", opinionDescription=" + answerDescription + ", isCorrect="
+		+ isCorrect + "]";
     }
 
 

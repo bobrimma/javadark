@@ -19,11 +19,12 @@ public class SurveyInstance implements JDInstance, Serializable {
     private int id;
     @Column(name = "name")
     private  String name;
+    @Column(name = "description")
+    private String description;
     @Column (name = "published", columnDefinition = "bit(1) default false")
     private boolean isPublished;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_survey")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "survey", fetch = FetchType.EAGER)
     private final List<QuestionInstance> questions = new ArrayList<>();
 
 
@@ -67,8 +68,22 @@ public class SurveyInstance implements JDInstance, Serializable {
 	this.isPublished = isPublished;
     }
     
+    public String getDescription()
+    {
+	return description;
+    }
+    public void setDescription(String description)
+    {
+	this.description = description;
+    }
+    
+    public int getId()
+    {
+	return id;
+    }
     public String toString()
     {
+	System.out.println("<====================================");
 	return String.format("Survey id = %d \nname = %s \nis published = %b \nquestions count = %d", 
 		this.id, this.name, this.isPublished, this.questions.size());
     }
