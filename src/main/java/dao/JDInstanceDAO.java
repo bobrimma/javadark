@@ -3,11 +3,11 @@ package main.java.dao;
 import main.java.domain.JDInstance;
 import main.java.utils.HibernateUtils;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class JDInstanceDAO {
         @Autowired
         private static SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
-        @Transactional
+        @javax.transaction.Transactional
         public static void saveIntoDB(JDInstance instance) {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
@@ -55,11 +55,19 @@ public class JDInstanceDAO {
             return inst;
         }
 
-        @SuppressWarnings("unchecked")
-        public static List<JDInstance> listSurveyInstance(String from) {
 
-            return sessionFactory.getCurrentSession().createQuery("from " + from)
+        @SuppressWarnings("unchecked")
+        public static List<JDInstance> listJDInstance(String query) {
+
+            return sessionFactory.getCurrentSession().createQuery(query)
                     .list();
+        }
+        
+        public static JDInstance getQuery(String query)
+        {
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            Query que = session.createQuery(query);
+            return (JDInstance) que.uniqueResult();
         }
 
         public static void removeSurveyInstance(int id, Class<JDInstance> instanceClass) {
