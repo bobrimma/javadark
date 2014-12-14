@@ -72,12 +72,6 @@ public class TestRun {
     public static void main(String[] args)
     {
 	HibernateUtils.getSessionFactory();
-//	SurveyInstance survey = new SurveyInstance();
-//	QuestionInstance question = new QuestionInstance();
-//	AnswerInstance answer = new AnswerInstance();
-//	question.addAnswer(answer);
-//	survey.addQuestion(question);
-//	JDInstanceDAO.addSurveyInstance(survey);
 	for (int i = 0; i < 5; i++)
 	{
 	    JDInstanceDAO.saveIntoDB(createPoll());
