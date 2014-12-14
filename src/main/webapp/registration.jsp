@@ -17,7 +17,7 @@ input{
   width: 270px;
 }
 .button-wide{
-	width: 285px;
+	width: 205px;
 }
 </style>
 <body>
@@ -51,6 +51,7 @@ input{
 				<input type="password" id="password" placeholder="password">
 			</div>
 			<div class="controls">
+				<a href="index.jsp"  class="btn" type="button" style="width: 50px;">Back</a>
 				<button class="btn  button-wide btn-success" type="submit">Register</button>
 			</div>
 		</form>

@@ -14,10 +14,6 @@ body {
 	background-color: #f5f5f5;
 }
 
-input {
-	width: 270px;
-}
-
 </style>
 <body>
 	<div class="container">
@@ -33,6 +29,7 @@ input {
 				<input type="text" id="email" placeholder="email">
 			</div>
 			<div class="controls">
+				<a href="index.jsp"  class="btn" type="button" style="width: 40px;">Back</a>
 				<button class="btn btn-primary" type="submit">Recover password</button>
 			</div>
 		</form>
