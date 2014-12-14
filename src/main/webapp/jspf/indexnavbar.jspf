@@ -2,13 +2,13 @@
 
 <div class="navbar">
 	<div class="navbar-inner">
-		<a class="brand" href="#">Имя проекта</a>
+		<a class="brand" href="#">Opinion Poll</a>
 		<ul class="nav">
 			<li class="divider-vertical"></li>
 		</ul>
 
 		<div class="btn-group pull-right">
-			<a class="btn btn-success" href="registration.jsp"><i class="icon-user icon-white"></i>Регистрация</a>
+			<a class="btn btn-success" href="registration.jsp"><i class="icon-user icon-white"></i>Registration</a>
 
 		</div>
 	</div>

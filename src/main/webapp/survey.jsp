@@ -44,10 +44,10 @@ body {
 			<div class="span12 bordered">
 				<div class="tabbable tabs-left">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#tab1" data-toggle="tab">Поиск</a></li>
-						<li><a href="#tab2" data-toggle="tab">Опубликованные</a></li>
-						<li><a href="#tab3" data-toggle="tab">Закрытые</a></li>
-						<li><a href="#tab4" data-toggle="tab">Создать новый</a></li>
+						<li class="active"><a href="#tab1" data-toggle="tab">Search</a></li>
+						<li><a href="#tab2" data-toggle="tab">Puplished</a></li>
+						<li><a href="#tab3" data-toggle="tab">Unpubliched</a></li>
+						<li><a href="#tab4" data-toggle="tab">Create new</a></li>
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab1">
