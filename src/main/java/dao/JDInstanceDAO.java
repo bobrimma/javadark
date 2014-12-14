@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class JDInstanceDAO {
         @Autowired
         private static SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
-        @Transactional
+        @javax.transaction.Transactional
         public static void saveIntoDB(JDInstance instance) {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
