@@ -1,4 +1,4 @@
-package main.java.domain;
+package domain;
 
 import javax.persistence.*;
 

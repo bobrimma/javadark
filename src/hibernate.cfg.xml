@@ -54,12 +54,12 @@
         <property name="hibernate.current_session_context_class">thread</property>
 
         <!-- Names the annotated entity class -->
-        <mapping class="main.java.domain.SurveyInstance"/>
-        <mapping class="main.java.domain.QuestionInstance"/>
-        <mapping class="main.java.domain.AnswerInstance"/>
-        <mapping class="main.java.domain.OpinionInstance"/>
-        <mapping class="main.java.domain.UserInstance"/>
-        <mapping class="main.java.domain.UserPollInstance"/>
+        <mapping class="domain.SurveyInstance"/>
+        <mapping class="domain.QuestionInstance"/>
+        <mapping class="domain.AnswerInstance"/>
+        <mapping class="domain.OpinionInstance"/>
+        <mapping class="domain.UserInstance"/>
+        <mapping class="domain.UserPollInstance"/>
         
         
 

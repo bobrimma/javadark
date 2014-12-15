@@ -1,9 +1,9 @@
-package main.java.service;
+package service;
 
 import java.util.List;
 
-import main.java.domain.SurveyInstance;
-import main.java.domain.UserInstance;
+import domain.SurveyInstance;
+import domain.UserInstance;
 
 /**
  *

@@ -1,10 +1,10 @@
-package main.java.service;
+package service;
 
-import main.java.dao.JDInstanceDAO;
-import main.java.domain.JDInstance;
-import main.java.domain.SurveyInstance;
-import main.java.domain.UserInstance;
-import main.java.utils.HibernateUtils;
+import dao.JDInstanceDAO;
+import domain.JDInstance;
+import domain.SurveyInstance;
+import domain.UserInstance;
+import utils.HibernateUtils;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;

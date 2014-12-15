@@ -1,7 +1,7 @@
-package main.java.dao;
+package dao;
 
-import main.java.domain.JDInstance;
-import main.java.utils.HibernateUtils;
+import domain.JDInstance;
+import utils.HibernateUtils;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;

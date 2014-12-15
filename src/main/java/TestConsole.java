@@ -1,13 +1,11 @@
-package main.java;
-
 import java.util.Scanner;
 
-import main.java.dao.JDInstanceDAO;
-import main.java.domain.AnswerInstance;
-import main.java.domain.JDInstance;
-import main.java.domain.QuestionInstance;
-import main.java.domain.SurveyInstance;
-import main.java.domain.UserInstance;
+import dao.JDInstanceDAO;
+import domain.AnswerInstance;
+import domain.JDInstance;
+import domain.QuestionInstance;
+import domain.SurveyInstance;
+import domain.UserInstance;
 
 /**
  *

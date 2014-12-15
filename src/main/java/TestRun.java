@@ -1,18 +1,17 @@
-package main.java;
 
 import java.util.Random;
 
-import main.java.dao.JDInstanceDAO;
-import main.java.domain.AnswerInstance;
-import main.java.domain.JDInstance;
-import main.java.domain.OpinionInstance;
-import main.java.domain.QuestionInstance;
-import main.java.domain.SurveyInstance;
-import main.java.domain.UserInstance;
-import main.java.domain.UserPollInstance;
-import main.java.service.JDInstanceService;
-import main.java.service.Retrievable;
-import main.java.utils.HibernateUtils;
+import dao.JDInstanceDAO;
+import domain.AnswerInstance;
+import domain.JDInstance;
+import domain.OpinionInstance;
+import domain.QuestionInstance;
+import domain.SurveyInstance;
+import domain.UserInstance;
+import domain.UserPollInstance;
+import service.JDInstanceService;
+import service.Retrievable;
+import utils.HibernateUtils;
 
 public class TestRun {
     
@@ -130,6 +129,7 @@ public class TestRun {
 	System.out.println("Unpublished surveys count = " + ret.getSurveys(false).size());
 	System.out.println("==================================");
 	System.out.println("Published surveys count = " + ret.getSurveys(true).size());
+	
 	HibernateUtils.getSessionFactory().close();
     }
 
