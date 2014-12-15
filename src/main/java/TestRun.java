@@ -1,7 +1,5 @@
 package main.java;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import main.java.dao.JDInstanceDAO;
@@ -12,6 +10,8 @@ import main.java.domain.QuestionInstance;
 import main.java.domain.SurveyInstance;
 import main.java.domain.UserInstance;
 import main.java.domain.UserPollInstance;
+import main.java.service.JDInstanceService;
+import main.java.service.Retrievable;
 import main.java.utils.HibernateUtils;
 
 public class TestRun {
@@ -72,6 +72,7 @@ public class TestRun {
     public static void main(String[] args)
     {
 	HibernateUtils.getSessionFactory();
+	Retrievable ret = JDInstanceService.getInstance();
 	for (int i = 0; i < 5; i++)
 	{
 	    JDInstanceDAO.saveIntoDB(createPoll());
@@ -81,16 +82,7 @@ public class TestRun {
 	{
 	    JDInstanceDAO.saveIntoDB(randomUser());
 	}
-	List<UserInstance>userList = new ArrayList<>();
-	JDInstance user = null;
-	for (int i = 1; 
-		(user = JDInstanceDAO.retrieveFromDB(UserInstance.class, i)) != null; i++)
-	{
-	    if (user instanceof UserInstance)
-	    {
-		userList.add((UserInstance) user);
-	    }
-	}
+	int usersCount = ret.getAllUsers().size();
 	//retrieve objects
 	JDInstance inst = null;
 	for (int i = 1; 
@@ -115,7 +107,7 @@ public class TestRun {
 			    if (null != answer)
 			    {
 				//get existed random user
-				UserInstance us = userList.get(new Random().nextInt(userList.size()));
+				UserInstance us = ret.getUser(new Random().nextInt(usersCount));
 				//user starts answers the question
 				UserPollInstance poll = new UserPollInstance(us, survey, false);
 				//save poll into db
@@ -128,6 +120,16 @@ public class TestRun {
 	    }
 	    System.out.println(inst);
 	}
+	System.out.println("==================================");
+	System.out.println("Random user's id = " + ret.getUser(ret.getAllUsers().get(new Random().nextInt(ret.getAllUsers().size())).getLogin()));
+	System.out.println("==================================");
+	System.out.println("Users size = " +ret.getAllUsers().size());
+	System.out.println("==================================");
+	System.out.println("Surveys size = " + ret.getSurveys().size());
+	System.out.println("==================================");
+	System.out.println("Unpublished surveys count = " + ret.getSurveys(false).size());
+	System.out.println("==================================");
+	System.out.println("Published surveys count = " + ret.getSurveys(true).size());
 	HibernateUtils.getSessionFactory().close();
     }
 
