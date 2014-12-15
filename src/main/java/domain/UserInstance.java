@@ -140,5 +140,9 @@ public class UserInstance implements JDInstance {
     {
         this.email = email;
     }
+    public int getId()
+    {
+	return id;
+    }
 
 }
