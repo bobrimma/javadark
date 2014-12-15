@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class JDInstanceService implements Retrievable {
     
-    public JDInstanceService getInstance()
+    public static JDInstanceService getInstance()
     {
 	return new JDInstanceService();
     }
