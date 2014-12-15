@@ -3,6 +3,7 @@ package main.java.dao;
 import main.java.domain.JDInstance;
 import main.java.utils.HibernateUtils;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,6 +30,24 @@ public class JDInstanceDAO {
             if (session.isOpen())
 	    {
 		session.close();
+	    }
+        }
+        
+        public static void updateInDB(JDInstance instance) throws HibernateException {
+            Session session = null;
+	    try
+	    {
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(instance);
+		session.getTransaction().commit();
+	    }
+	    finally
+	    {
+		if (null != session && session.isOpen())
+		{
+		    session.close();
+		}
 	    }
         }
         
@@ -63,19 +82,28 @@ public class JDInstanceDAO {
                     .list();
         }
         
-        public static JDInstance getQuery(String query)
+        @SuppressWarnings("unchecked")
+	public static<T extends JDInstance> List<T> getJDInstanceList(Class<T> instance)
         {
-            Session session = HibernateUtils.getSessionFactory().openSession();
+            String query = "Select u FROM " + instance.getSimpleName() + " u";
+	    Session session = HibernateUtils.getSessionFactory().openSession();
             Query que = session.createQuery(query);
-            return (JDInstance) que.uniqueResult();
+            List<T>list = que.list();
+            session.close();
+	    return (List<T>) list;
         }
+        
 
-        public static void removeSurveyInstance(int id, Class<JDInstance> instanceClass) {
-            JDInstance instance = (JDInstance) sessionFactory.getCurrentSession().load(
-                    instanceClass, id);
-            if (null != instance) {
-                sessionFactory.getCurrentSession().delete(instance);
-            }
+        public static void removeSurveyInstance(int id, Class<JDInstance> instanceClass) throws HibernateException {
+            try
+	    {
+		JDInstance instance = (JDInstance) sessionFactory.getCurrentSession().load(
+		        instanceClass, id);
+		if (null != instance) {
+		    sessionFactory.getCurrentSession().delete(instance);
+		}
+	    }
+            finally{}
 
         }
     }
