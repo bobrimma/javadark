@@ -22,33 +22,33 @@ input{
 </style>
 <body>
 <div class="container">
-		<form class="form-register">
+		<form action = "/OpinionPoll/RegistrationController" class="form-register" method="post">
 			<legend>
 				Registration form
 			</legend>
 			<label class="control-label" for="firstName">First name</label>
 			<div class="controls">
-				<input type="text" id="firstName" placeholder="first name">
+				<input type="text" name="firstName" placeholder="first name">
 			</div>
 			<label class="control-label" for="lastName">Last name</label>
 			<div class="controls">
-				<input type="text" id="lastName" placeholder="last name">
+				<input type="text" name="lastName" placeholder="last name">
 			</div>
 			<label class="control-label" for="email">E-mail</label>
 			<div class="controls">
-				<input type="text" id="email" placeholder="e-mail@somewhere.com">
+				<input type="text" name="email" placeholder="e-mail@somewhere.com">
 			</div>
 			<label class="control-label" for="username">Username</label>
 			<div class="controls">
-				<input type="text" id="username" placeholder="username">
+				<input type="text" name="username" placeholder="username">
 			</div>
-			<label class="control-label" for="password">Password</label>
+			<label class="control-label" for="password1">Password</label>
 			<div class="controls">
-				<input type="password" id="password" placeholder="password">
+				<input type="password" name="password1" placeholder="password">
 			</div>
-			<label class="control-label" for="password">Repeat password</label>
+			<label class="control-label" for="password2">Repeat password</label>
 			<div class="controls">
-				<input type="password" id="password" placeholder="password">
+				<input type="password" name="password2" placeholder="password">
 			</div>
 			<div class="controls">
 				<a href="index.jsp"  class="btn" type="button" style="width: 50px;">Back</a>
