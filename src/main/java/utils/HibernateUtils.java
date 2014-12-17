@@ -27,4 +27,9 @@ public class HibernateUtils {
     {
 	return sessionFactory;
     }
+    
+    public static void init()
+    {
+	getSessionFactory();
+    }
 }
