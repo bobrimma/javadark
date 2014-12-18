@@ -17,7 +17,7 @@ import main.java.domain.UserInstance;
  * Servlet implementation class RegistrationController
  */
 @WebServlet("/RegistrationController")
-public class RegistrationController extends HttpServlet {
+public class RegistrationController extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
