@@ -1,0 +1,24 @@
+<%@ page pageEncoding="UTF-8"%>
+
+<form action="/OpinionPoll/SurveysController" class="form-register"
+	method="post">
+	<legend> Survey information </legend>
+	<label class="control-label" for="name">Name</label>
+	<div class="controls">
+		<textarea rows="2" name="name" placeholder="survey name"></textarea>
+	</div>
+	<label class="control-label" for="description">Description</label>
+	<div class="controls">
+		<textarea rows="5" name="description"
+			placeholder="enter description here..."></textarea>
+	</div>
+	<label class="control-label" for="status">Status</label>
+	<div class="controls">
+		<label class="radio"> <input type="radio" name="status" value="unpublished" checked> Unpublished</label> 
+		<label class="radio"> <input type="radio" name="status" value="published">Published</label>
+	</div>
+	<div class="controls">
+		<a href="surveys.jsp" class="btn" type="button" style="width: 50px;">Back</a>
+		<button class="btn  button-wide btn-success" type="submit">Save</button>
+	</div>
+</form>
