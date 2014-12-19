@@ -7,7 +7,7 @@ import utils.HibernateUtils;
 /**
  * This class is necessary for initialization SessionFactory to allow hibernate
  * operations. It seems it is a temporary solution.
- * 
+ * @deprecated
  * @author Kapitoha
  * 
  */
