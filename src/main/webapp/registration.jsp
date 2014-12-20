@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,19 +13,21 @@ body {
 	padding-bottom: 40px;
 	background-color: #f5f5f5;
 }
-input{
-  width: 270px;
+
+input {
+	width: 270px;
 }
-.button-wide{
+
+.button-wide {
 	width: 205px;
 }
 </style>
 <body>
-<div class="container">
-		<form action = "/OpinionPoll/RegistrationController" class="form-register" method="post">
-			<legend>
-				Registration form
-			</legend>
+	<div class="container">
+		<form action="/OpinionPoll/RegistrationController"
+			class="form-register" method="post">
+			<legend> Registration form </legend>
+			<div style="color: #FF0000;">${errorMessage}</div>
 			<label class="control-label" for="firstName">First name</label>
 			<div class="controls">
 				<input type="text" name="firstName" placeholder="first name">
@@ -51,7 +53,7 @@ input{
 				<input type="password" name="password2" placeholder="password">
 			</div>
 			<div class="controls">
-				<a href="index.jsp"  class="btn" type="button" style="width: 50px;">Back</a>
+				<a href="index.jsp" class="btn" type="button" style="width: 50px;">Back</a>
 				<button class="btn  button-wide btn-success" type="submit">Register</button>
 			</div>
 		</form>

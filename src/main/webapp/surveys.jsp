@@ -1,3 +1,4 @@
+<%@page import="domain.QuestionInstance"%>
 <%@page import="domain.SurveyInstance"%>
 <%@page import="service.Retrievable"%>
 <%@page import="service.JDInstanceService"%>
@@ -33,9 +34,22 @@ body {
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
+
+textarea {
+	width: 500px;
+}
 </style>
 <body>
 	<div class="container">
+		<%
+			String action = request.getParameter("formname");
+
+			Integer createdSurveyId = (Integer) request
+					.getAttribute("createdSurveyId");
+
+			//		out.print(action);
+		%>
+
 
 		<div class="row">
 			<div class="span12">
@@ -46,20 +60,28 @@ body {
 			<div class="span12">
 				<div class="tabbable tabs-left">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#tab1" data-toggle="tab">Search</a></li>
+						<li <%if ("search".equals(action) || (action == null)) {%>
+							class="active" <%}%>><a href="#tab1" data-toggle="tab">Search</a></li>
 						<li><a href="#tab2" data-toggle="tab">Published</a></li>
-						<li><a href="#tab3" data-toggle="tab">Unpubliched</a></li>
-						<li><a href="#tab4" data-toggle="tab">Create new</a></li>
+						<li><a href="#tab3" data-toggle="tab">Unpublished</a></li>
+						<li
+							<%if (("new".equals(action)) || ("newquestion".equals(action))
+					|| ("clear".equals(action))) {%>
+							class="active" <%}%>><a href="#tab4" data-toggle="tab">Create
+								new</a></li>
 					</ul>
 					<div class="tab-content">
 						<%
 							Retrievable ret = JDInstanceService.getInstance();
 						%>
-						<div class="tab-pane active" id="tab1">
+						<div
+							class="tab-pane  <%if ("search".equals(action) || (action == null)) {%>active<%}%>"
+							id="tab1">
 							<form class="form-search" method="post"
 								action="/OpinionPoll/SurveysController">
 								<div class="input-append">
 									<input type="text" class="span2 search-query" name="keyword">
+									<input type="hidden" name="formname" value="search">
 									<button type="submit" class="btn">GO</button>
 								</div>
 							</form>
@@ -111,7 +133,7 @@ body {
 															out.print(status);
 											%>
 										</td>
-										<td><a href="surveyinfo.jsp">edit</a></td>
+										<td><a href="surveyinfo.jsp?id=<%=survey.getId()%>">edit</a></td>
 									</tr>
 									<%
 										}
@@ -160,7 +182,7 @@ body {
 																out.print("no description");
 											%>
 										</td>
-										<td><a href="surveyinfo.jsp">edit</a></td>
+										<td><a href="surveyinfo.jsp?id=<%=survey.getId()%>">edit</a></td>
 									</tr>
 									<%
 										}
@@ -209,7 +231,7 @@ body {
 																out.print("no description");
 											%>
 										</td>
-										<td><a href="surveyinfo.jsp">edit</a></td>
+										<td><a href="surveyinfo.jsp?id=<%=survey.getId()%>">edit</a></td>
 									</tr>
 									<%
 										}
@@ -221,8 +243,67 @@ body {
 								}
 							%>
 						</div>
-						<div class="tab-pane" id="tab4">
-							<p align="center">Привет, я 4-я секция.</p>
+						<div
+							class="tab-pane  <%if (("new".equals(action)) || ("newquestion".equals(action))
+					|| ("clear".equals(action))) {%>active<%}%>"
+							id="tab4">
+
+							<form action="/OpinionPoll/SurveysController" method="post"
+								class="form">
+								<legend> New survey</legend>
+								<div class="control-group">
+									<label class="control-label" for="name">Name</label>
+									<div class="controls">
+										<textarea rows="1" name="name" placeholder="survey name"
+											class="ntSaveForms"></textarea>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="description">Description</label>
+									<div class="controls">
+										<textarea rows="3" name="description"
+											placeholder="enter description here..." class="ntSaveForms"></textarea>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="status">Status</label>
+									<div class="controls">
+										<label class="radio inline"> <input type="radio"
+											name="status" value="unpublished"
+											<%if ((createdSurveyId == null)
+					|| (!(ret.getSurvey(createdSurveyId)).isPublished())) {%>
+											checked <%}%>> Unpublished
+										</label> <label class="radio inline"> <input type="radio"
+											name="status" value="published"
+											<%if ((createdSurveyId != null)
+					&& ((ret.getSurvey(createdSurveyId)).isPublished())) {%>
+											checked <%}%>>Published
+										</label>
+									</div>
+								</div>
+								<input type="hidden" name="formname" value="new">
+								<div class="control-group">
+									<div class="controls">
+										<button class="btn  button-wide btn-success" type="submit"
+											<%if (createdSurveyId != null) {%> disabled="disabled" <%}%>>Save</button>
+											<button href="surveys.jsp"
+									class="btn  btn-info ntSaveFormsSubmit" type="reset"
+									style="width: 100px;">Clear</button>
+									</div>
+								</div>
+							</form>
+						
+							<%
+								if (createdSurveyId != null) {
+							%>
+							<div class="alert alert-error">Question list is empty.
+							<a href="questions.jsp?idSurv=<%=createdSurveyId%>" class="ntSaveFormsSubmit">Add questions</a>
+								</div>
+							<%
+								} 
+							%>
+							
+
 						</div>
 					</div>
 				</div>
@@ -230,5 +311,7 @@ body {
 
 		</div>
 	</div>
+	<script type="text/javascript"
+		src="/OpinionPoll/resources/js/ntsaveforms.js"></script>
 </body>
 </html>

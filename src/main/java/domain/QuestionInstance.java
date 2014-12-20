@@ -50,82 +50,54 @@ public final class QuestionInstance implements JDInstance, Serializable {
 	this.survey = survey;
     }
 
-    /**
-     * Add new optionally answer to the question
-     * @param answer
-     * @return True if successful
-     */
+   
     public boolean addAnswer(AnswerInstance answer)
     {
 	return answers.add(answer);
     }
     
-    /**
-     * Get survey's id
-     * @return
-     */
+  
     public int getId()
     {
         return id;
     }
 
-    /**
-     * get survey's name
-     * @return
-     */
+    
     public String getName()
     {
         return name;
     }
 
-    /**
-     * Set surveys name
-     * @param name
-     */
+  
     public void setName(String name)
     {
         this.name = name;
     }
 
-    /**
-     * Get question's description
-     * @return
-     */
+   
     public String getDescription()
     {
         return description;
     }
 
-    /**
-     * Set question's description
-     * @param description
-     */
+ 
     public void setDescription(String description)
     {
         this.description = description;
     }
-    /**
-     * Get full answers list
-     * @return
-     */
+  
     public List<AnswerInstance> getAnswerList()
     {
         return answers;
     }
 
-    /**
-     * Check if able to get more than one answer per one question
-     * @return
-     */
+ 
     public boolean isAllowMultipleAnswers()
     {
 	return allowMultipleAnswers;
     }
 
-    /**
-     * Set able to give more than one answer to one question
-     * @param Boolean allowMultipleAnswers
-     */
+   
     public void setAllowMultipleAnswers(boolean allowMultipleAnswers)
     {
 	this.allowMultipleAnswers = allowMultipleAnswers;

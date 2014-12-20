@@ -1,7 +1,9 @@
 package service;
 
 import dao.JDInstanceDAO;
+import domain.AnswerInstance;
 import domain.JDInstance;
+import domain.QuestionInstance;
 import domain.SurveyInstance;
 import domain.UserInstance;
 import utils.HibernateUtils;
@@ -173,6 +175,46 @@ public class JDInstanceService implements Retrievable {
 	public SurveyInstance getSurvey(Integer id)
 	{
 	    return (SurveyInstance) JDInstanceDAO.retrieveFromDB(SurveyInstance.class, id);
+	}
+
+/*	@Override
+	public List<QuestionInstance> getUnsubsrQuestions() {
+	    String query = "Select q FROM " +QuestionInstance.class.getSimpleName()+" q WHERE q.survey = "+null;
+	    Session session = HibernateUtils.getSessionFactory().openSession();
+            Query que = session.createQuery(query);
+            List<QuestionInstance> list = que.list();
+            session.close();
+	    return list;
+	}
+	
+	@Override
+	public List<AnswerInstance> getUnsubsrAnswers() {
+	    String query = "Select a FROM " +AnswerInstance.class.getSimpleName()+" a WHERE a.question = "+null;
+	    Session session = HibernateUtils.getSessionFactory().openSession();
+            Query que = session.createQuery(query);
+            List<AnswerInstance> list = que.list();
+            session.close();
+	    return list;
+	}*/
+	
+	@Override
+	public List<QuestionInstance> getQuestions(Integer surveyId) {
+	    String query = "Select q FROM " +QuestionInstance.class.getSimpleName()+" q WHERE q.survey = "+surveyId;
+	    Session session = HibernateUtils.getSessionFactory().openSession();
+            Query que = session.createQuery(query);
+            List<QuestionInstance> list = que.list();
+            session.close();
+	    return list;
+	}
+	
+	@Override
+	public List<AnswerInstance> getAnswers(Integer questionId) {
+	    String query = "Select q FROM " +AnswerInstance.class.getSimpleName()+" q WHERE q.question = "+questionId;
+	    Session session = HibernateUtils.getSessionFactory().openSession();
+            Query que = session.createQuery(query);
+            List<AnswerInstance> list = que.list();
+            session.close();
+	    return list;
 	}
     }
 

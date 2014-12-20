@@ -2,18 +2,18 @@
 
 <div class="navbar">
 	<div class="navbar-inner">
-		<a class="brand" href="/OpinionPoll/index.jsp">Project name</a>
+		<a class="brand" href="/OpinionPoll/index.jsp" class="ntSaveFormsSubmit">Project name</a>
 		<ul class="nav">
-			<li><a href="/OpinionPoll/surveys.jsp">Surveys</a></li>
-			<li><a href="/OpinionPoll/users.jsp">Users</a></li>
+			<li><a href="/OpinionPoll/surveys.jsp"  class="ntSaveFormsSubmit" >Surveys</a></li>
+			<li><a href="/OpinionPoll/users.jsp"  class="ntSaveFormsSubmit">Users</a></li>
 			  <li class="divider-vertical"></li>
 			  	</ul>
 			  	
 	<div class="btn-group pull-right">
   <a class="btn btn-primary dropdown-toggle pull-right" data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i>username  <span class="caret"></span></a>
   <ul class="dropdown-menu">
-    <li><a href="/OpinionPoll/profile.jsp"><i class="icon-pencil"></i> Edit</a></li>
-    <li><a href="/OpinionPoll/index.jsp"><i class="icon-off"></i> Log out</a></li>
+    <li><a href="/OpinionPoll/profile.jsp"  class="ntSaveFormsSubmit"><i class="icon-pencil"></i> Edit</a></li>
+    <li><a href="/OpinionPoll/index.jsp"  class="ntSaveFormsSubmit"><i class="icon-off"></i> Log out</a></li>
   </ul>
 
 </div>

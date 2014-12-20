@@ -31,6 +31,10 @@ body {
 	border-radius: 4px;
 }
 
+#submit{
+	margin-left: 20px;
+}
+
 
 </style>
 <body>
@@ -39,7 +43,9 @@ body {
 			<div class="span12">
 				<%@ include file="/jspf/indexnavbar.jspf"%>
 			</div>
+			<div id = "submit" class="alert alert-success" >${submitMessage}</div>
 		</div>
+		
 		<div class="row">
 			<div class="span4">
 						<%@ include file="/jspf/loginform.jspf"%>

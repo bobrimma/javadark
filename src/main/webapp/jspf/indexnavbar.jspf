@@ -4,11 +4,13 @@
 	<div class="navbar-inner">
 		<a class="brand" href="#">Opinion Poll</a>
 		<ul class="nav">
+			<li><a href="/OpinionPoll/surveys.jsp"  class="ntSaveFormsSubmit">Surveys</a></li>
+			<li><a href="/OpinionPoll/users.jsp"  class="ntSaveFormsSubmit">Users</a></li>
 			<li class="divider-vertical"></li>
 		</ul>
 
 		<div class="btn-group pull-right">
-			<a class="btn btn-success" href="registration.jsp"><i class="icon-user icon-white"></i>Registration</a>
+			<a class="btn btn-success" href="registration.jsp"  class="ntSaveFormsSubmit"><i class="icon-user icon-white"></i>Registration</a>
 
 		</div>
 	</div>

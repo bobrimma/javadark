@@ -2,6 +2,8 @@ package service;
 
 import java.util.List;
 
+import domain.AnswerInstance;
+import domain.QuestionInstance;
 import domain.SurveyInstance;
 import domain.UserInstance;
 
@@ -21,4 +23,8 @@ public interface Retrievable {
     public List<SurveyInstance> getSurveys(String keyword);
     public List<SurveyInstance> getSurveys(boolean isPublished);
     public SurveyInstance getSurvey(Integer id);
+   // public List<QuestionInstance> getUnsubsrQuestions();
+   // public List<AnswerInstance> getUnsubsrAnswers();
+    public List<QuestionInstance> getQuestions(Integer surveyId);
+    public List<AnswerInstance> getAnswers(Integer questionId);
 }
