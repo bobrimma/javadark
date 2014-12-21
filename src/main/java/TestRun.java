@@ -130,6 +130,10 @@ public class TestRun {
 	System.out.println("Unpublished surveys count = " + ret.getSurveys(false).size());
 	System.out.println("==================================");
 	System.out.println("Published surveys count = " + ret.getSurveys(true).size());
+	System.out.println("==================================");
+	System.out.println("Max survey id = " + JDInstanceDAO.getMaximalExistedId(SurveyInstance.class, "id"));
+	System.out.println("==================================");
+	System.out.println("Next allowed id = " + ret.getNextAllowedSurveyUnicId());
 	HibernateUtils.getSessionFactory().close();
     }
 

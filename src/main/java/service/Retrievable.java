@@ -27,4 +27,7 @@ public interface Retrievable {
    // public List<AnswerInstance> getUnsubsrAnswers();
     public List<QuestionInstance> getQuestions(Integer surveyId);
     public List<AnswerInstance> getAnswers(Integer questionId);
+    public int getNextAllowedSurveyUnicId();
+    public int getNextAllowedQuestionUnicId();
+    public int getNextAllowedAnswerUnicId();
 }

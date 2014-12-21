@@ -25,7 +25,7 @@ import java.util.List;
  * Created by Admin on 30.11.14.
  */
 @Service
-public class JDInstanceService implements Retrievable {
+public class JDInstanceService implements Retrievable, Actionable {
     
     public static JDInstanceService getInstance()
     {
@@ -36,10 +36,18 @@ public class JDInstanceService implements Retrievable {
         private JDInstanceDAO instanceDAO;
 
         @Transactional
-        public void saveInstance(JDInstance instance) {
+        public boolean saveInstance(JDInstance instance) {
 
-            JDInstanceDAO.saveIntoDB(instance);
-
+            try
+	    {
+		JDInstanceDAO.saveIntoDB(instance);
+	    }
+	    catch (Exception e)
+	    {
+		System.err.println("Cannot save into DB, cause: " + e.getLocalizedMessage());
+		return false;
+	    }
+            return true;
         }
 
 //        @Transactional
@@ -57,6 +65,7 @@ public class JDInstanceService implements Retrievable {
 	    }
 	    catch (Exception e)
 	    {
+		System.err.println("Cannot remove instance, cause: " + e.getLocalizedMessage());
 		return false;
 	    }
             return true;
@@ -197,6 +206,7 @@ public class JDInstanceService implements Retrievable {
 	    return list;
 	}*/
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<QuestionInstance> getQuestions(Integer surveyId) {
 	    String query = "Select q FROM " +QuestionInstance.class.getSimpleName()+" q WHERE q.survey = "+surveyId;
@@ -207,6 +217,7 @@ public class JDInstanceService implements Retrievable {
 	    return list;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<AnswerInstance> getAnswers(Integer questionId) {
 	    String query = "Select q FROM " +AnswerInstance.class.getSimpleName()+" q WHERE q.question = "+questionId;
@@ -216,5 +227,24 @@ public class JDInstanceService implements Retrievable {
             session.close();
 	    return list;
 	}
+
+	@Override
+	public int getNextAllowedSurveyUnicId()
+	{
+	    return JDInstanceDAO.getNextAllowedUnicId(SurveyInstance.class, "id");
+	}
+
+	@Override
+	public int getNextAllowedQuestionUnicId()
+	{
+	    return JDInstanceDAO.getNextAllowedUnicId(QuestionInstance.class, "id");
+	}
+
+	@Override
+	public int getNextAllowedAnswerUnicId()
+	{
+	    return JDInstanceDAO.getNextAllowedUnicId(AnswerInstance.class, "id");
+	}
+
     }
 
