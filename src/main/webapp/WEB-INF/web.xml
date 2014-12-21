@@ -14,12 +14,36 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
-<!-- <servlet>
-<servlet-name>RegistrationController</servlet-name>
-<servlet-class>controller.RegistrationController</servlet-class>
-</servlet>
-<servlet-mapping>
-<servlet-name>RegistrationController</servlet-name>
-<url-pattern>/RegistrationController</url-pattern>
-</servlet-mapping> -->
+	<servlet>
+		<servlet-name>AnswerController</servlet-name>
+		<servlet-class>controller.AnswerController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AnswerController</servlet-name>
+		<url-pattern>/AnswerController</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>QuestionController</servlet-name>
+		<servlet-class>controller.QuestionController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>QuestionController</servlet-name>
+		<url-pattern>/QuestionController</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>RegistrationController</servlet-name>
+		<servlet-class>controller.RegistrationController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegistrationController</servlet-name>
+		<url-pattern>/RegistrationController</url-pattern>
+	</servlet-mapping>
+		<servlet>
+		<servlet-name>SurveysController</servlet-name>
+		<servlet-class>controller.SurveysController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SurveysController</servlet-name>
+		<url-pattern>/SurveysController</url-pattern>
+	</servlet-mapping>
 </web-app>
