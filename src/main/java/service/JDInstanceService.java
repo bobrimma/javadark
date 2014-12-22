@@ -38,16 +38,20 @@ public class JDInstanceService implements Retrievable, Actionable {
         @Transactional
         public boolean saveInstance(JDInstance instance) {
 
-            try
+            synchronized (JDInstanceService.class)
 	    {
-		JDInstanceDAO.saveIntoDB(instance);
+		try
+		{
+		    JDInstanceDAO.saveIntoDB(instance);
+		    return true;
+		}
+		catch (Exception e)
+		{
+		    System.err.println("Cannot save into DB, cause: "
+			    + e.getLocalizedMessage());
+		    return false;
+		}
 	    }
-	    catch (Exception e)
-	    {
-		System.err.println("Cannot save into DB, cause: " + e.getLocalizedMessage());
-		return false;
-	    }
-            return true;
         }
 
 //        @Transactional
@@ -227,23 +231,10 @@ public class JDInstanceService implements Retrievable, Actionable {
             session.close();
 	    return list;
 	}
-
-	@Override
-	public int getNextAllowedSurveyUnicId()
+	
+	public<T extends JDInstance> int getNextAllowedUnicId(Class<T> instanceClass)
 	{
-	    return JDInstanceDAO.getNextAllowedUnicId(SurveyInstance.class, "id");
-	}
-
-	@Override
-	public int getNextAllowedQuestionUnicId()
-	{
-	    return JDInstanceDAO.getNextAllowedUnicId(QuestionInstance.class, "id");
-	}
-
-	@Override
-	public int getNextAllowedAnswerUnicId()
-	{
-	    return JDInstanceDAO.getNextAllowedUnicId(AnswerInstance.class, "id");
+	    return JDInstanceDAO.getNextAllowedUnicId(instanceClass, "id");
 	}
 
     }

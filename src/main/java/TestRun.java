@@ -10,11 +10,17 @@ import domain.QuestionInstance;
 import domain.SurveyInstance;
 import domain.UserInstance;
 import domain.UserPollInstance;
+import service.Actionable;
 import service.JDInstanceService;
 import service.Retrievable;
 import utils.HibernateUtils;
 
 public class TestRun {
+    
+    public static void printLine()
+    {
+	System.out.println("========================================================");
+    }
     
     public static String randomName(int length)
     {
@@ -73,20 +79,21 @@ public class TestRun {
     {
 	HibernateUtils.getSessionFactory();
 	Retrievable ret = JDInstanceService.getInstance();
+	Actionable action = JDInstanceService.getInstance();
 	for (int i = 0; i < 5; i++)
 	{
-	    JDInstanceDAO.saveIntoDB(createPoll());
+	    action.saveInstance(createPoll());
 	}
 	//generate users
 	for (int i = 0; i < 50; i++)
 	{
-	    JDInstanceDAO.saveIntoDB(randomUser());
+	    action.saveInstance(randomUser());
 	}
 	int usersCount = ret.getAllUsers().size();
 	//retrieve objects
 	JDInstance inst = null;
 	for (int i = 1; 
-		(inst = JDInstanceDAO.retrieveFromDB(SurveyInstance.class, i)) != null; i++)
+		(inst = ret.getSurvey(i)) != null; i++)
 	{
 	    if (inst instanceof SurveyInstance)
 	    {
@@ -112,7 +119,7 @@ public class TestRun {
 				UserPollInstance poll = new UserPollInstance(us, survey, false);
 				//save poll into db
 				OpinionInstance opinion = new OpinionInstance(poll, answer);
-				JDInstanceDAO.saveIntoDB(opinion);
+				action.saveInstance(opinion);
 			    }
 			}
 		    }
@@ -120,20 +127,20 @@ public class TestRun {
 	    }
 	    System.out.println(inst);
 	}
-	System.out.println("==================================");
+	printLine();
 	System.out.println("Random user's id = " + ret.getUser(ret.getAllUsers().get(new Random().nextInt(ret.getAllUsers().size())).getLogin()));
-	System.out.println("==================================");
+	printLine();
 	System.out.println("Users size = " +ret.getAllUsers().size());
-	System.out.println("==================================");
+	printLine();
 	System.out.println("Surveys size = " + ret.getSurveys().size());
-	System.out.println("==================================");
+	printLine();
 	System.out.println("Unpublished surveys count = " + ret.getSurveys(false).size());
-	System.out.println("==================================");
+	printLine();
 	System.out.println("Published surveys count = " + ret.getSurveys(true).size());
-	System.out.println("==================================");
+	printLine();
 	System.out.println("Max survey id = " + JDInstanceDAO.getMaximalExistedId(SurveyInstance.class, "id"));
-	System.out.println("==================================");
-	System.out.println("Next allowed id = " + ret.getNextAllowedSurveyUnicId());
+	printLine();
+	System.out.println("Next allowed id = " + ret.getNextAllowedUnicId(SurveyInstance.class));
 	HibernateUtils.getSessionFactory().close();
     }
 
