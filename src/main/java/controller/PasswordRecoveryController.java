@@ -47,7 +47,10 @@ public class PasswordRecoveryController extends HttpServlet {
 	    {
 		jis.sendEmail(user.getEmail(), "Password recovety", "Your password was changed to: " + newPass, null);
 	    }
-	    response.getOutputStream().print("New password will send on your email if it valid");
+//	    response.getOutputStream().print("New password will send on your email if it valid");
+	    request.setAttribute("submitMessage",
+		    "New password will send on your email if it valid");
+	    request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
 }

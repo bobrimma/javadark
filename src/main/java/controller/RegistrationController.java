@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.JDInstanceDAO;
+import service.JDInstanceService;
 import domain.UserInstance;
 
 /**
@@ -50,33 +50,17 @@ public class RegistrationController extends HttpServlet {
 		String username = request.getParameter("username");
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
-
-		// Checking data entered in 'First name' field
-		if (firstname.equals("")) {
-			request.setAttribute("errorMessage",
-					"Field 'First name' can't be empty");
-			request.getRequestDispatcher("/registration.jsp").forward(request,
-					response);
-		}
-	
-
-		// Checking data entered in 'Last name' field
-		if (lastName.equals("")) {
-			request.setAttribute("errorMessage",
-					"Field 'Last name' can't be empty");
-			request.getRequestDispatcher("/registration.jsp").forward(request,
-					response);
-		}
+		JDInstanceService service = JDInstanceService.getInstance();
 
 		// Checking data entered in 'E-mail' field
-		if (email.equals("")) {
+		if (email.matches("\\s+")) {
 			request.setAttribute("errorMessage",
 					"Field 'E-mail' can't be empty");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
 					response);
 		}
 		// if entered data is an e-mail
-		else if (!email.matches("\\w+@\\w+\\.\\w+")) {
+		else if (!email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
 			request.setAttribute("errorMessage",
 					"Please enter correct e-mail address");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
@@ -84,7 +68,7 @@ public class RegistrationController extends HttpServlet {
 		}
 
 		// Checking data entered in 'Username' field
-		if (username.equals("")) {
+		if (username.matches("\\s+")) {
 			request.setAttribute("errorMessage",
 					"Field 'Username' can't be empty");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
@@ -92,7 +76,7 @@ public class RegistrationController extends HttpServlet {
 		}
 
 		// Checking data entered in "Passwords" fields
-		if (password1.equals("")) {
+		if (password1.matches("\\s+")) {
 			request.setAttribute("errorMessage",
 					"Field 'Password' can't be empty");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
@@ -104,7 +88,7 @@ public class RegistrationController extends HttpServlet {
 					response);
 		}
 		// If message contains "space"
-		else if (password1.matches("\\w*\\s+\\w*")) {
+		else if (password1.contains("\\s+")) {
 			request.setAttribute("errorMessage",
 					"Password cannot contain space");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
@@ -123,9 +107,26 @@ public class RegistrationController extends HttpServlet {
 		user.setPassword(password1.toCharArray());
 
 		// Adding data to DB and forward to index.jsp
-		JDInstanceDAO.saveIntoDB(user);
-		request.setAttribute("submitMessage",
+		if (null == service.getUsers(username, null, null, email))
+		{
+		    if (JDInstanceService.getInstance().saveInstance(user))
+		    {
+			request.setAttribute("submitMessage",
 				"Congratulations your registration was successful!");
+		    }
+		    else
+			request.setAttribute("errorMessage",
+				"Registration failed!");
+		    request.getRequestDispatcher("/registration.jsp").forward(request,
+				response);
+		}
+		else
+		{
+		    request.setAttribute("errorMessage",
+				"Such user already existed. Try another login or/and email");
+		    request.getRequestDispatcher("/registration.jsp").forward(request,
+				response);
+		}
 		request.getRequestDispatcher("/index.jsp").forward(request, response);
 
 	}
