@@ -2,10 +2,12 @@ package service;
 
 import dao.JDInstanceDAO;
 import domain.AnswerInstance;
+import domain.JDEmailConfigInstance;
 import domain.JDInstance;
 import domain.QuestionInstance;
 import domain.SurveyInstance;
 import domain.UserInstance;
+import service.email.EmailSession;
 import utils.HibernateUtils;
 
 import org.hibernate.HibernateException;
@@ -14,6 +16,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
 import java.util.Iterator;
@@ -52,6 +55,39 @@ public class JDInstanceService implements Retrievable, Actionable {
 		    return false;
 		}
 	    }
+        }
+        
+        /**
+         * If jdEmailConfigs == null, there would be used existed configs with 0 Id, if they are existed :)
+         * @param to
+         * @param subject
+         * @param message
+         * @param jdEmailConfigs
+         */
+        public boolean sendEmail(String to, String subject, String message, JDEmailConfigInstance jdEmailConfigs)
+        {
+            String pKey = "javadark";
+            JDEmailConfigInstance jdEmail = jdEmailConfigs;
+            if (null == jdEmail)
+            {
+        	jdEmail = (JDEmailConfigInstance) JDInstanceDAO.retrieveFromDB(JDEmailConfigInstance.class, 0);
+        	if (jdEmail == null)
+		{
+		    System.err.println("There is now such EmailConfigs in DB");
+		    return false;
+		}
+            }
+            EmailSession es = new EmailSession(jdEmail.getHost(pKey), jdEmail.getPort(pKey), jdEmail.getProtocol(pKey));
+        	try
+        	{
+        	    es.sendMail(jdEmail.getEmail(pKey), to, subject, message, jdEmail.getUsername(pKey), jdEmail.getPassword(pKey) , false);
+        	    return true;
+        	}
+        	catch (MessagingException e)
+        	{
+        	    System.err.println("cannot sent email, cause: " + e.getLocalizedMessage());
+        	    return false;
+        	}
         }
 
 //        @Transactional
@@ -124,7 +160,7 @@ public class JDInstanceService implements Retrievable, Actionable {
 	}
 
 	@Override
-	public Integer getUser(String login)
+	public Integer getUserId(String login)
 	{
 	    String query = "Select u FROM UserInstance u where u.login=:login";
 	    Session session = null;
@@ -236,6 +272,20 @@ public class JDInstanceService implements Retrievable, Actionable {
 	{
 	    return JDInstanceDAO.getNextAllowedUnicId(instanceClass, "id");
 	}
+	
+	public boolean validateUser(UserInstance user)
+	{
+	    Session session = HibernateUtils.getSessionFactory().openSession();
+	    Query query = session.
+		    createQuery(String.format("SELECT u FROM %s u WHERE u.login=:login AND u.password=:password", 
+			    user.getClass().getSimpleName()));
+	    query.setParameter("login", user.getLogin());
+	    query.setParameter("password", user.getPassword());
+	    UserInstance u = (UserInstance) query.uniqueResult();
+	    session.close();
+	    return u != null;
+	}
+	
 
     }
 

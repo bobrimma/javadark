@@ -18,7 +18,7 @@ public interface Retrievable {
     public List<UserInstance> getAllUsers();
     public List<UserInstance> getUsers(String login, String name, String lastName, String email);
     public UserInstance getUser(Integer id);
-    public Integer getUser(String login);
+    public Integer getUserId(String login);
     //************************************************** Opinion Poll case
     public List<SurveyInstance> getSurveys();
     public List<SurveyInstance> getSurveys(String keyword);

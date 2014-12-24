@@ -3,6 +3,7 @@
 import java.util.Random;
 
 import dao.JDInstanceDAO;
+import dao.LoginDao;
 import domain.AnswerInstance;
 import domain.JDInstance;
 import domain.OpinionInstance;
@@ -128,7 +129,8 @@ public class TestRun {
 	    System.out.println(inst);
 	}
 	printLine();
-	System.out.println("Random user's id = " + ret.getUser(ret.getAllUsers().get(new Random().nextInt(ret.getAllUsers().size())).getLogin()));
+	UserInstance user = ret.getAllUsers().get(new Random().nextInt(ret.getAllUsers().size()));
+	System.out.println("Random user's id = " + ret.getUserId(user.getLogin()));
 	printLine();
 	System.out.println("Users size = " +ret.getAllUsers().size());
 	printLine();
@@ -141,6 +143,13 @@ public class TestRun {
 	System.out.println("Max survey id = " + JDInstanceDAO.getMaximalExistedId(SurveyInstance.class, "id"));
 	printLine();
 	System.out.println("Next allowed id = " + ret.getNextAllowedUnicId(SurveyInstance.class));
+	printLine();
+	System.out.println("Validate existed user = " + JDInstanceService.getInstance().validateUser(user));
+	printLine();
+	System.out.println("Validate new user = " + JDInstanceService.getInstance().validateUser(new UserInstance()));
+	System.out.println("Validate Julya user = " + LoginDao.validate(user.getLogin(), String.valueOf(user.getPassword()).replaceAll("\\W", "")));
+	printLine();
+	
 	HibernateUtils.getSessionFactory().close();
     }
 

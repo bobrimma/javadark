@@ -81,9 +81,12 @@ public class JDInstanceDAO {
 
         @SuppressWarnings("unchecked")
         public static List<JDInstance> listJDInstance(String query) {
-
-            return sessionFactory.getCurrentSession().createQuery(query)
-                    .list();
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query2 = session.createQuery(query);
+            List<JDInstance> list = query2.list();
+            session.close();
+            return list;
         }
         
         /**
@@ -120,6 +123,12 @@ public class JDInstanceDAO {
             return rez;
         }
         
+        /**
+         * Returns maximal existed ID + 1;
+         * @param instanceClass
+         * @param columnName
+         * @return
+         */
         public static<T extends JDInstance> int getNextAllowedUnicId(Class<T> instanceClass, String columnName)
         {
             AtomicInteger id = new AtomicInteger(getMaximalExistedId(instanceClass, columnName));

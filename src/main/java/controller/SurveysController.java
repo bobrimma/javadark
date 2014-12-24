@@ -4,20 +4,19 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.Actionable;
 import service.JDInstanceService;
 import service.Retrievable;
-import dao.JDInstanceDAO;
 import domain.SurveyInstance;
-import domain.UserInstance;
 
 
 public class SurveysController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final Actionable action = JDInstanceService.getInstance();
 
 
 	public SurveysController() {
@@ -68,7 +67,7 @@ public class SurveysController extends HttpServlet {
 		} else {
 			editedSurvey.setPublished(false);
 		}
-		JDInstanceDAO.updateInDB(editedSurvey);
+		action.updateInstance(editedSurvey);
 		
 	}
 
@@ -82,7 +81,7 @@ public class SurveysController extends HttpServlet {
 			isPublished=true;
 		}
 		survey.setPublished(isPublished);
-		JDInstanceDAO.saveIntoDB(survey);
+		action.saveInstance(survey);
 		request.setAttribute("createdSurveyId", survey.getId());
 
 	}
