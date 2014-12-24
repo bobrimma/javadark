@@ -40,20 +40,10 @@ public class JDInstanceService implements Retrievable, Actionable {
 
         @Transactional
         public boolean saveInstance(JDInstance instance) {
-
+            
             synchronized (JDInstanceService.class)
 	    {
-		try
-		{
-		    JDInstanceDAO.saveIntoDB(instance);
-		    return true;
-		}
-		catch (Exception e)
-		{
-		    System.err.println("Cannot save into DB, cause: "
-			    + e.getLocalizedMessage());
-		    return false;
-		}
+        	return JDInstanceDAO.saveIntoDB(instance);
 	    }
         }
         
@@ -90,12 +80,6 @@ public class JDInstanceService implements Retrievable, Actionable {
         	}
         }
 
-//        @Transactional
-//        public List<JDInstance> listInstance(String table) {
-//
-//            return JDInstanceDAO.listJDInstance(table);
-//        }
-
         @Transactional
         public boolean removeInstance(int id, Class<JDInstance> instanceClass) {
 
@@ -113,17 +97,7 @@ public class JDInstanceService implements Retrievable, Actionable {
         
         public boolean updateInstance(JDInstance instance)
         {
-            try
-	    {
-		JDInstanceDAO.updateInDB(instance);
-	    }
-	    catch (Exception e)
-	    {
-		System.err.println("Cannot update instance "+instance.getClass().getName() 
-			+ " cause: " + e.getLocalizedMessage());
-		return false;
-	    }
-            return true;
+           return JDInstanceDAO.updateInDB(instance);
         }
 
 	@Override

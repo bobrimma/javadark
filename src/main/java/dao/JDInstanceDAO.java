@@ -26,25 +26,54 @@ public class JDInstanceDAO {
         private static SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
         @javax.transaction.Transactional
-        public static void saveIntoDB(JDInstance instance) {
-            Session session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.save(instance);
-            session.getTransaction().commit();
-            if (session.isOpen())
-	    {
-		session.close();
-	    }
-        }
-        
-        public static void updateInDB(JDInstance instance) throws HibernateException {
+        public static boolean saveIntoDB(JDInstance instance) {
             Session session = null;
+            Transaction trans = null;
 	    try
 	    {
 		session = sessionFactory.openSession();
-		session.beginTransaction();
+		trans = session.beginTransaction();
+		session.save(instance);
+		trans.commit();
+		return true;
+	    }
+	    catch (HibernateException e)
+	    {
+		if (trans != null)
+		{
+		    trans.rollback();
+		}
+		System.err.println("Save was unsuccessful. Rollback");
+		return false;
+	    }
+            finally 
+            { 
+        	if(session.isOpen())
+        	    {
+        		session.close();
+        	    }
+            }
+        }
+        
+        public static boolean updateInDB(JDInstance instance) throws HibernateException {
+            Session session = null;
+            Transaction trans = null;
+	    try
+	    {
+		session = sessionFactory.openSession();
+		trans = session.beginTransaction();
 		session.update(instance);
-		session.getTransaction().commit();
+		trans.commit();
+		return true;
+	    }
+	    catch(Exception e)
+	    {
+		if (trans != null)
+		{
+		    trans.rollback();
+		}
+		System.err.println("Save was unsuccessful. Rollback");
+		return false;
 	    }
 	    finally
 	    {

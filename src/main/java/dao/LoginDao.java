@@ -2,8 +2,6 @@ package dao;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -11,7 +9,6 @@ public class LoginDao {
 
 	public static boolean validate(String name, String pass) {
 		boolean status = false;
-		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
@@ -20,10 +17,9 @@ public class LoginDao {
 		String userName = "javadark";
 		String password = "javadark";
 
-		try {
+		try(Connection conn = (Connection) DriverManager.getConnection(url, userName, password)) {
 			Class.forName(driver).newInstance();
-			conn = (Connection) DriverManager.getConnection(url, userName,
-					password);
+			
 			pst = (PreparedStatement) conn
 					.prepareStatement("select * from Users where login=? and password=?;");
 			pst.setString(1, name);
@@ -35,28 +31,6 @@ public class LoginDao {
 		} catch (Exception e) {
 			System.out.println(e);
 
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (pst != null) {
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 		return status;
 	}

@@ -17,16 +17,13 @@ body {
 </style>
 <body>
 	<div class="container">
-		<form class="form-signin">
+		<form  action="/OpinionPoll/PasswordRecoveryController" class="form-signin" method="post">
 			<legend> Forgot password? Don't worry! </legend>
-			<label class="control-label" for="username">Username</label>
-			<div class="controls">
-				<input type="text" id="username" placeholder="username">
-			</div>
+			
 			<label class="control-label" for="email">Enter e-mail you
 				registered for</label>
 			<div class="controls">
-				<input type="text" id="email" placeholder="email">
+				<input type="text" name="email" placeholder="email">
 			</div>
 			<div class="controls">
 				<a href="index.jsp"  class="btn" type="button" style="width: 40px;">Back</a>
