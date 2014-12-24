@@ -1,16 +1,16 @@
 <%@ page pageEncoding="UTF-8"%>
 
-		<form class="form-signin">
+		<form action="/OpinionPoll/LoginController" class="form-signin" method="post">
 			<legend>
 				Please sign in
 			</legend>
 			<label class="control-label" for="inputUsername">Username</label>
 			<div class="controls">
-				<input type="text" id="inputUsername" placeholder="username">
+				<input type="text" name="inputUsername" placeholder="username">
 			</div>
 			<label class="control-label" for="inputPassword">Password <a href="passwordrecovery.jsp"> (forgot password)</a></label>
 			<div class="controls">
-				<input type="password" id="inputPassword" placeholder="password">
+				<input type="password" name="inputPassword" placeholder="password">
 			</div>
 			<div class="controls">
 				<button class="btn btn-primary" type="submit">Sign in</button> or 

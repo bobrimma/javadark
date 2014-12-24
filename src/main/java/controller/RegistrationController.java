@@ -3,12 +3,12 @@ package controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.JDInstanceDAO;
+import dao.LoginDao;
 import domain.UserInstance;
 
 /**
@@ -33,7 +33,6 @@ public class RegistrationController extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-	
 	}
 
 	/**
@@ -50,23 +49,15 @@ public class RegistrationController extends HttpServlet {
 		String email = request.getParameter("email");
 		String username = request.getParameter("username");
 		String password1 = request.getParameter("password1");
-		String password2 = request.getParameter("password2");
 
 		// Checking data entered in 'First name' field
 		if (firstname.equals("")) {
-			request.setAttribute("errorMessage",
-					"Field 'First name' can't be empty");
-			request.getRequestDispatcher("/registration.jsp").forward(request,
-					response);
+			firstname = "anonym";
 		}
-	
 
 		// Checking data entered in 'Last name' field
 		if (lastName.equals("")) {
-			request.setAttribute("errorMessage",
-					"Field 'Last name' can't be empty");
-			request.getRequestDispatcher("/registration.jsp").forward(request,
-					response);
+			lastName = "anonym";
 		}
 
 		// Checking data entered in 'E-mail' field
@@ -110,8 +101,26 @@ public class RegistrationController extends HttpServlet {
 					"Password cannot contain space");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
 					response);
-		} else if (!password1.equals(password2)) {
-			request.setAttribute("errorMessage", "Entered passwords not match");
+		}
+
+		if (!LoginDao.checkUser(username) && LoginDao.checkEmail(email)) {
+
+			request.setAttribute("errorMessage",
+					"This e-mail is already exist. Please choose another.");
+			request.getRequestDispatcher("/registration.jsp").forward(request,
+					response);
+
+		} else if (LoginDao.checkUser(username) && !LoginDao.checkEmail(email)) {
+
+			request.setAttribute("errorMessage",
+					"This Username is already exist. Please choose another.");
+			request.getRequestDispatcher("/registration.jsp").forward(request,
+					response);
+
+		} else if (LoginDao.checkUser(username) && LoginDao.checkEmail(email)) {
+
+			request.setAttribute("errorMessage",
+					"This Username and E-mail are already exist. Please choose another.");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
 					response);
 		}

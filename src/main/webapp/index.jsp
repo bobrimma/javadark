@@ -22,7 +22,7 @@ body {
 .bordered {
 	padding-top: 10px;
 	padding-bottom: 40px;
-	border-left:0;
+	border-left: 0;
 	border: 1px solid #dddddd;
 	border-collapse: separate;
 	*border-collapse: collapse;
@@ -34,8 +34,6 @@ body {
 #submit{
 	margin-left: 20px;
 }
-
-
 </style>
 <body>
 	<div class="container">
@@ -43,16 +41,14 @@ body {
 			<div class="span12">
 				<%@ include file="/jspf/indexnavbar.jspf"%>
 			</div>
-			<div id = "submit" class="alert alert-success" >${submitMessage}</div>
+			<div id = "submit" class="alert alert-error">${errorMessage}</div>
+			<div id = "submit" class="alert alert-success">${submitMessage}</div>			
 		</div>
-		
 		<div class="row">
 			<div class="span4">
-						<%@ include file="/jspf/loginform.jspf"%>
+				<%@ include file="/jspf/loginform.jspf"%>
 			</div>
-			<div class="span8">
-				
-			</div>
+			<div class="span8"></div>
 		</div>
 	</div>
 </body>

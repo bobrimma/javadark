@@ -23,6 +23,14 @@
 		<url-pattern>/AnswerController</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>LoginController</servlet-name>
+		<servlet-class>controller.LoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginController</servlet-name>
+		<url-pattern>/LoginController</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>QuestionController</servlet-name>
 		<servlet-class>controller.QuestionController</servlet-class>
 	</servlet>
