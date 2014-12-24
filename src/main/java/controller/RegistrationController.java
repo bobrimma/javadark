@@ -58,6 +58,7 @@ public class RegistrationController extends HttpServlet {
 					"Field 'E-mail' can't be empty");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
 					response);
+			return;
 		}
 		// if entered data is an e-mail
 		else if (!email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
@@ -65,6 +66,7 @@ public class RegistrationController extends HttpServlet {
 					"Please enter correct e-mail address");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
 					response);
+			return;
 		}
 
 		// Checking data entered in 'Username' field
@@ -73,6 +75,7 @@ public class RegistrationController extends HttpServlet {
 					"Field 'Username' can't be empty");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
 					response);
+			return;
 		}
 
 		// Checking data entered in "Passwords" fields
@@ -81,11 +84,13 @@ public class RegistrationController extends HttpServlet {
 					"Field 'Password' can't be empty");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
 					response);
+			return;
 		} else if (password1.length() < 8) {
 			request.setAttribute("errorMessage",
 					"Password must be at least 8 charactes");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
 					response);
+			return;
 		}
 		// If message contains "space"
 		else if (password1.contains("\\s+")) {
@@ -93,10 +98,12 @@ public class RegistrationController extends HttpServlet {
 					"Password cannot contain space");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
 					response);
+			return;
 		} else if (!password1.equals(password2)) {
 			request.setAttribute("errorMessage", "Entered passwords not match");
 			request.getRequestDispatcher("/registration.jsp").forward(request,
 					response);
+			return;
 		}
 
 		// Adding data to User
@@ -113,6 +120,7 @@ public class RegistrationController extends HttpServlet {
 		    {
 			request.setAttribute("submitMessage",
 				"Congratulations your registration was successful!");
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		    }
 		    else
 			request.setAttribute("errorMessage",
@@ -127,7 +135,6 @@ public class RegistrationController extends HttpServlet {
 		    request.getRequestDispatcher("/registration.jsp").forward(request,
 				response);
 		}
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
 
 	}
 
