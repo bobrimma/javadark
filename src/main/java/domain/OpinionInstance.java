@@ -72,7 +72,7 @@ public final class OpinionInstance implements JDInstance {
     
     public int hashCode()
     {
-	return (userId+questionId+answerId) >> 17;
+	return (userId+questionId+answerId) << 17;
     }
     
 

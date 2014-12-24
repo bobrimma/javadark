@@ -60,6 +60,7 @@
         <mapping class="domain.OpinionInstance"/>
         <mapping class="domain.UserInstance"/>
         <mapping class="domain.UserPollInstance"/>
+        <mapping class="domain.JDEmailConfigInstance"/>
         
         
 

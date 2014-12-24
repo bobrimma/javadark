@@ -3,14 +3,18 @@ package dao;
 import domain.JDInstance;
 import utils.HibernateUtils;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Admin on 30.11.14.
@@ -77,11 +81,19 @@ public class JDInstanceDAO {
 
         @SuppressWarnings("unchecked")
         public static List<JDInstance> listJDInstance(String query) {
-
-            return sessionFactory.getCurrentSession().createQuery(query)
-                    .list();
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query2 = session.createQuery(query);
+            List<JDInstance> list = query2.list();
+            session.close();
+            return list;
         }
         
+        /**
+         * Return list with all JDInstances in DB
+         * @param instance
+         * @return
+         */
         @SuppressWarnings("unchecked")
 	public static<T extends JDInstance> List<T> getJDInstanceList(Class<T> instance)
         {
@@ -93,17 +105,53 @@ public class JDInstanceDAO {
 	    return (List<T>) list;
         }
         
+        /**
+         * Return maximal Integer value in the column where InstanceClass.class and column name with Integer values
+         * @param instanceClass
+         * @param columnName
+         * @return int
+         */
+        public static<T extends JDInstance> int getMaximalExistedId(Class<T> instanceClass, String columnName)
+        {
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(instanceClass);
+            criteria.setProjection(Projections.max(columnName));
+            criteria.setMaxResults(1);
+            int rez = (int) criteria.uniqueResult();
+            session.close();
+            return rez;
+        }
+        
+        /**
+         * Returns maximal existed ID + 1;
+         * @param instanceClass
+         * @param columnName
+         * @return
+         */
+        public static<T extends JDInstance> int getNextAllowedUnicId(Class<T> instanceClass, String columnName)
+        {
+            AtomicInteger id = new AtomicInteger(getMaximalExistedId(instanceClass, columnName));
+            return id.incrementAndGet();
+        }
+        
 
         public static void removeSurveyInstance(int id, Class<JDInstance> instanceClass) throws HibernateException {
+            Session session = null;
             try
 	    {
-		JDInstance instance = (JDInstance) sessionFactory.getCurrentSession().load(
-		        instanceClass, id);
+        	session = HibernateUtils.getSessionFactory().openSession();
+		JDInstance instance = (JDInstance) session.load(instanceClass, id);
 		if (null != instance) {
-		    sessionFactory.getCurrentSession().delete(instance);
+		    Transaction transaction = session.beginTransaction();
+		    session.delete(instance);
+		    transaction.commit();
 		}
 	    }
-            finally{}
+            finally{
+        	if (null != session && session.isOpen())
+        	    session.close();
+            }
 
         }
     }
