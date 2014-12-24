@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import domain.AnswerInstance;
+import domain.JDInstance;
 import domain.QuestionInstance;
 import domain.SurveyInstance;
 import domain.UserInstance;
@@ -17,7 +18,7 @@ public interface Retrievable {
     public List<UserInstance> getAllUsers();
     public List<UserInstance> getUsers(String login, String name, String lastName, String email);
     public UserInstance getUser(Integer id);
-    public Integer getUser(String login);
+    public Integer getUserId(String login);
     //************************************************** Opinion Poll case
     public List<SurveyInstance> getSurveys();
     public List<SurveyInstance> getSurveys(String keyword);
@@ -27,4 +28,5 @@ public interface Retrievable {
    // public List<AnswerInstance> getUnsubsrAnswers();
     public List<QuestionInstance> getQuestions(Integer surveyId);
     public List<AnswerInstance> getAnswers(Integer questionId);
+    public<T extends JDInstance> int getNextAllowedUnicId(Class<T> instanceClass);
 }

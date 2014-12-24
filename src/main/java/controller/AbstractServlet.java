@@ -2,8 +2,6 @@ package controller;
 
 import javax.servlet.http.HttpServlet;
 
-import utils.HibernateUtils;
-
 /**
  * This class is necessary for initialization SessionFactory to allow hibernate
  * operations. It seems it is a temporary solution.
