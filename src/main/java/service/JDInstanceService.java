@@ -81,7 +81,7 @@ public class JDInstanceService implements Retrievable, Actionable {
         }
 
         @Transactional
-        public boolean removeInstance(int id, Class<JDInstance> instanceClass) {
+        public <T extends JDInstance> boolean removeInstance(int id, Class<T> instanceClass) {
 
             try
 	    {
