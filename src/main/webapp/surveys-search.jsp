@@ -38,8 +38,9 @@ body {
 textarea {
 	width: 500px;
 }
+
 form {
-margin: 0 0 0;
+	margin: 0 0 0;
 }
 </style>
 <body>
@@ -104,11 +105,12 @@ margin: 0 0 0;
 								%>
 							</td>
 							<td><%=status%></td>
-							<td><form method="post" action="/OpinionPoll/surveyinfo.jsp">
+							<td><form method="post"
+									action="/OpinionPoll/survey-info.jsp">
 									<input type="hidden" name="from" value="search"> <input
 										type="hidden" name="id" value=<%=survey.getId()%>>
 									<button type="submit" class="btn btn-link">edit</button>
-								</form> <!-- <a href="surveyinfo.jsp?id=<%=survey.getId()%>">edit</a> --></td>
+								</form></td>
 						</tr>
 						<%
 							}

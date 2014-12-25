@@ -89,7 +89,7 @@ body {
 													out.print("no description");
 								%>
 							</td>
-							<td><a href="surveyinfo.jsp?id=<%=survey.getId()%>">edit</a></td>
+							<td><a href="survey-info.jsp?id=<%=survey.getId()%>">edit</a></td>
 						</tr>
 						<%
 							}

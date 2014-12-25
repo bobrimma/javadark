@@ -12,7 +12,7 @@
 					<li><a href="/OpinionPoll/surveys-published.jsp">Published</a></li>
 					<li><a href="/OpinionPoll/surveys-unpublished.jsp">Unpublished</a></li>
 					<li><a href="#">My surveys</a></li>
-					<li><a href="#">Create new</a></li>
+					<li><a href="/OpinionPoll/survey-new.jsp">Create new</a></li>
 				</ul>
 			</li>
 			<li><a href="/OpinionPoll/users.jsp">Users</a></li>
