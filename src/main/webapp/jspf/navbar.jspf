@@ -2,7 +2,7 @@
 
 <div class="navbar">
 	<div class="navbar-inner">
-		<a class="brand" href="/OpinionPoll/index.jsp">Opinion Poll</a>
+		<a class="brand" href="#">Opinion Poll</a>
 		<ul class="nav">
 			<li class="dropdown" ><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown"> Surveys <b class="caret"></b>

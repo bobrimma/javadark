@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,13 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import service.JDInstanceService;
-import dao.LoginDao;
 import domain.UserInstance;
 
 /**
  * Servlet implementation class RegistrationController
  */
-//Р®Р»СЏ, РёР·РІРёРЅРё, Р·Р° С‚Рѕ С‡С‚Рѕ Р·Р°С‚РµСЂ С‚РІРѕСЋ СЂР°Р±РѕС‚Сѓ. Р’РѕР·РѕР±РЅРѕРІРёР» РєР°Рє Р±С‹Р»Рѕ.
+//Юля, извини, за то что затер твою работу. Возобновил как было.
 public class RegistrationController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -41,6 +41,7 @@ public class RegistrationController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+	    JDInstanceService service = JDInstanceService.getInstance();
 
 		UserInstance user = new UserInstance();
 
@@ -108,8 +109,9 @@ public class RegistrationController extends HttpServlet {
 					response);
 			return;
 		}
-
-		if (!LoginDao.checkUser(username) && LoginDao.checkEmail(email)) {
+		List<UserInstance> uMail = service.getUsers(null, null, null, email);
+		List<UserInstance> uLog = service.getUsers(username, null, null, null);
+		if (null != uMail && !uMail.isEmpty() && uMail.get(0) != null) {
 
 			request.setAttribute("errorMessage",
 					"This e-mail is already exist. Please choose another.");
@@ -117,7 +119,7 @@ public class RegistrationController extends HttpServlet {
 					response);
 			return;
 
-		} else if (LoginDao.checkUser(username) && !LoginDao.checkEmail(email)) {
+		} else if (null != uLog && !uLog.isEmpty() && uLog.get(0) != null) {
 
 			request.setAttribute("errorMessage",
 					"This Username is already exist. Please choose another.");
@@ -125,13 +127,6 @@ public class RegistrationController extends HttpServlet {
 					response);
 			return;
 
-		} else if (LoginDao.checkUser(username) && LoginDao.checkEmail(email)) {
-
-			request.setAttribute("errorMessage",
-					"This Username and E-mail are already exist. Please choose another.");
-			request.getRequestDispatcher("/registration.jsp").forward(request,
-					response);
-			return;
 		}
 
 		// Adding data to User

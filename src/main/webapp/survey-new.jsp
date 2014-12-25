@@ -18,7 +18,6 @@ body {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
-
 .bordered {
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -47,7 +46,52 @@ form {
 		</div>
 		<div class="row">
 			<div class="span12">
-			
+			<div>
+			<%
+				if (request.getAttribute("errorMessage") != null) {
+			%>
+			<div class="alert alert-error">${errorMessage}</div>
+			<%
+				}
+			%>
+		</div>
+				<form action="/OpinionPoll/SurveysController" method="post"
+					class="form">
+					<legend> New survey</legend>
+					<div class="control-group">
+						<label class="control-label" for="name">Name *</label>
+						<div class="controls">
+							<textarea rows="1" name="name" placeholder="survey name"
+								class="ntSaveForms"></textarea>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="description">Description *</label>
+						<div class="controls">
+							<textarea rows="3" name="description"
+								placeholder="enter description here..." class="ntSaveForms"></textarea>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="status">Status</label>
+						<div class="controls">
+							<label class="radio inline"> <input type="radio"
+								name="status" value="unpublished" checked> Unpublished
+							</label> 
+							<label class="radio inline"> <input type="radio"
+								name="status" value="published">Published
+							</label>
+						</div>
+					</div>
+					<input type="hidden" name="formname" value="new">
+					<lable>Fields marked with * are required</lable>
+					<div class="control-group">
+						<div class="controls">
+							<button class="btn  button-wide btn-success" type="submit">Save</button>
+						</div>
+					</div>
+				</form>
+
 			</div>
 		</div>
 	</div>

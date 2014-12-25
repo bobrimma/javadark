@@ -3,7 +3,6 @@
 import java.util.Random;
 
 import dao.JDInstanceDAO;
-import dao.LoginDao;
 import domain.AnswerInstance;
 import domain.JDInstance;
 import domain.OpinionInstance;
@@ -147,7 +146,6 @@ public class TestRun {
 	System.out.println("Validate existed user = " + JDInstanceService.getInstance().validateUser(user));
 	printLine();
 	System.out.println("Validate new user = " + JDInstanceService.getInstance().validateUser(new UserInstance()));
-	System.out.println("Validate Julya user = " + LoginDao.validate(user.getLogin(), String.valueOf(user.getPassword()).replaceAll("\\W", "")));
 	printLine();
 	
 	HibernateUtils.getSessionFactory().close();

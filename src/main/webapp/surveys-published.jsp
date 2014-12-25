@@ -35,6 +35,9 @@ body {
 	border-radius: 4px;
 }
 
+form {
+	margin: 0 0 0;
+}
 </style>
 <body>
 	<div class="container">
@@ -89,7 +92,12 @@ body {
 													out.print("no description");
 								%>
 							</td>
-							<td><a href="survey-info.jsp?id=<%=survey.getId()%>">edit</a></td>
+							<td><form method="post"
+									action="/OpinionPoll/survey-info.jsp">
+									<input type="hidden" name="from" value="published"> <input
+										type="hidden" name="id" value=<%=survey.getId()%>>
+									<button type="submit" class="btn btn-link">edit</button>
+								</form></td>
 						</tr>
 						<%
 							}
