@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/jspf/link.jspf"%>
-<title>Index</title>
+<title>Creating new survey</title>
 </head>
 <style type="text/css">
 body {
@@ -21,8 +21,7 @@ body {
 
 .bordered {
 	padding-top: 10px;
-	padding-bottom: 40px;
-	border-left: 0;
+	padding-bottom: 10px;
 	border: 1px solid #dddddd;
 	border-collapse: separate;
 	*border-collapse: collapse;
@@ -31,36 +30,25 @@ body {
 	border-radius: 4px;
 }
 
-#submit {
-	margin-left: 20px;
+textarea {
+	width: 500px;
+}
+
+form {
+	margin: 0 0 0;
 }
 </style>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="span12">
-				<%@ include file="/jspf/indexnavbar.jspf"%>
+				<%@ include file="/jspf/navbar.jspf"%>
 			</div>
-		</div>
-		<div>
-			<%
-				if (request.getAttribute("errorMessage") != null) {
-			%>
-			<div id="submit" class="alert alert-error">${errorMessage}</div>
-			<%
-				}
-				if (request.getAttribute("submitMessage") != null) {
-			%>
-			<div id="submit" class="alert alert-success">${submitMessage}</div>
-			<%
-				}
-			%>
 		</div>
 		<div class="row">
-			<div class="span4">
-				<%@ include file="/jspf/loginform.jspf"%>
+			<div class="span12">
+			
 			</div>
-			<div class="span8"></div>
 		</div>
 	</div>
 </body>

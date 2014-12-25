@@ -16,10 +16,10 @@ public class LoginDao {
     public static Connection dbConnection() throws InstantiationException,
 	    IllegalAccessException, ClassNotFoundException, SQLException
     {
-	String url = "jdbc:mysql://localhost:3306/JavaDark";
+	String url = "jdbc:mysql://localhost:3306/javadark";
 	String driver = "com.mysql.jdbc.Driver";
-	String userName = "root";
-	String password = "Bdgolk@82";
+	String userName = "javadark";
+	String password = "javadark";
 	Class.forName(driver).newInstance();
 	conn = (Connection) DriverManager
 		.getConnection(url, userName, password);
