@@ -1,6 +1,10 @@
 import java.util.Arrays;
 
-import service.email.CreateEmailProps;
+import dao.JDInstanceDAO;
+import domain.JDEmailConfigInstance;
+import domain.JDInstance;
+import service.JDInstanceService;
+import service.email.Protocol;
 import utils.CryptUtils;
 import utils.HibernateUtils;
 
@@ -14,7 +18,15 @@ public class TestMail {
 
     public static void main(String[] args)
     {
-	new CreateEmailProps().create(null, null, null, null, 0, null);
+	String email = "javadark.mail@gmail.com";
+	String username ="javadark.mail";
+	String password = "javadarkpassword";
+	String host = "smtp.gmail.com";
+	
+	JDEmailConfigInstance ec = new JDEmailConfigInstance(email, username, password, host, 465, Protocol.SMTPS, "javadark");
+	JDInstanceService.getInstance().saveInstance(ec);
+	JDInstance mail = JDInstanceDAO.retrieveFromDB(JDEmailConfigInstance.class, 0);
+	System.out.println(mail.toString());
 	//send email
 //	JDInstanceService.getInstance().sendEmail("kapitohaua@gmail.com", "Java D'Ark", "This is test from Java D'Ark", (JDEmailConfigInstance) mail);
 	printLine();
