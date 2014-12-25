@@ -1,7 +1,12 @@
+<%@page import="domain.SurveyInstance"%>
 <%@ page pageEncoding="UTF-8"%>
 <form action="/OpinionPoll/SurveysController" class="form-register"
 	method="post">
 	<legend> Survey information </legend>
+<%-- 	<%
+	Retrievable ret = JDInstanceService.getInstance();
+	SurveyInstance survey = ret.getSurvey(id);
+	%> --%>
 	<label class="control-label" for="name">Name</label>
 	<div class="controls">
 		<textarea rows="2" name="name" placeholder="survey name"></textarea>
@@ -21,6 +26,8 @@
 	</div>
 	<input type="hidden" name="formname" value="edit">
 	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+	<input type="hidden" name="from" value="<%=request.getParameter("from")%>"> 
+	
 	<div class="controls">
 		<a href="surveys.jsp" class="btn" type="button" style="width: 50px;">Back</a>
 		<button class="btn  button-wide btn-success" type="submit">Save</button>
