@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import service.JDInstanceService;
+
 import com.mysql.jdbc.Connection;
 
-import dao.JDInstanceDAO;
-import dao.LoginDao;
+import domain.UserInstance;
 
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -48,19 +49,23 @@ public class LoginController extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null)
 			session.setAttribute("inputUsername", inputUsername);
-
-		if (LoginDao.validate(inputUsername, inputPassword)) {
-
-			request.getRequestDispatcher("/surveys.jsp").forward(request,
+		
+		UserInstance user = new UserInstance();
+		
+		user.setLogin(inputUsername);
+		user.setPassword(inputPassword.toCharArray());
+		
+		JDInstanceService service = new JDInstanceService();
+		
+		if (service.validateUser(user)){
+			request.getRequestDispatcher("/surveys-published.jsp").forward(request,
 					response);
+		}
 
-		} else {
-
+		else{
 			request.setAttribute("errorMessage", "Incorrect login or password");
 			request.getRequestDispatcher("/index.jsp").forward(request,
 					response);
-
-		}
-
+		}		
 	}
 }

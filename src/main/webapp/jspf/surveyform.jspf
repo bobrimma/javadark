@@ -1,27 +1,29 @@
 <%@page import="domain.SurveyInstance"%>
+<%@page import="service.JDInstanceService"%>
+<%@page import="service.Retrievable"%>
 <%@ page pageEncoding="UTF-8"%>
 <form action="/OpinionPoll/SurveysController" class="form-register"
 	method="post">
 	<legend> Survey information </legend>
-<%-- 	<%
+ 	<%
 	Retrievable ret = JDInstanceService.getInstance();
-	SurveyInstance survey = ret.getSurvey(id);
-	%> --%>
+ 	Integer survId=Integer.parseInt(request.getParameter("id"));
+	SurveyInstance survey = ret.getSurvey(survId);
+	%> 
 	<label class="control-label" for="name">Name</label>
 	<div class="controls">
-		<textarea rows="2" name="name" placeholder="survey name"></textarea>
+		<textarea rows="2" name="name"><%=survey.getName()%></textarea>
 	</div>
 	<label class="control-label" for="description">Description</label>
 	<div class="controls">
-		<textarea rows="5" name="description"
-			placeholder="enter description here..."></textarea>
+		<textarea rows="5" name="description"><%=survey.getDescription()%></textarea>
 	</div>
 	<label class="control-label" for="status">Status</label>
 	<div class="controls">
-		<label class="radio"> <input type="radio" name="status"
-			value="unpublished" checked> Unpublished
-		</label> <label class="radio"> <input type="radio" name="status"
-			value="published">Published
+		<label class="radio"> <input type="radio" name="status"	value="unpublished" <%  if (!survey.isPublished()) {%>
+											checked <%}%>> Unpublished
+		</label> <label class="radio"> <input type="radio" name="status" value="published" <%  if (survey.isPublished()) {%>
+											checked <%}%>>Published
 		</label>
 	</div>
 	<input type="hidden" name="formname" value="edit">

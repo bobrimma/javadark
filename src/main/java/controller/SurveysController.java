@@ -40,23 +40,22 @@ public class SurveysController extends HttpServlet {
 		}else if (formName.equals("new")) {
 			createSurvey(request, response);
 		}
+		request.getRequestDispatcher("/surveys.jsp").forward(request, response);
 
 	}
 
 	protected void doSearch(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response) {
 		Retrievable ret = JDInstanceService.getInstance();
 		String keyword = request.getParameter("keyword");
 		if ((keyword != null) && (!(keyword.trim()).equals(""))) {
 			List<SurveyInstance> findedSurveys = ret.getSurveys(keyword);
 			request.setAttribute("findedSurveys", findedSurveys);
 		}
-		request.getRequestDispatcher("/surveys-search.jsp").forward(request, response);
-
 	}
 
 	protected void doEdit(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response) {
 		Retrievable ret = JDInstanceService.getInstance();
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		SurveyInstance editedSurvey = ret.getSurvey(id);
@@ -69,15 +68,11 @@ public class SurveysController extends HttpServlet {
 			editedSurvey.setPublished(false);
 		}
 		action.updateInstance(editedSurvey);
-		if (request.getParameter("from").equals("search")){
-		request.getRequestDispatcher("/surveys-search.jsp").forward(request, response);
-		}else
-			request.getRequestDispatcher("/surveys.jsp").forward(request, response);
-	
+		
 	}
 
 	protected void createSurvey(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response) {
 		SurveyInstance survey = new SurveyInstance();
 		survey.setName(request.getParameter("name"));
 		survey.setDescription(request.getParameter("description"));
@@ -88,7 +83,6 @@ public class SurveysController extends HttpServlet {
 		survey.setPublished(isPublished);
 		action.saveInstance(survey);
 		request.setAttribute("createdSurveyId", survey.getId());
-		request.getRequestDispatcher("/surveys.jsp").forward(request, response);
 
 	}
 	protected void addQuestion(HttpServletRequest request,
