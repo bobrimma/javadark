@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import service.JDInstanceService;
+import dao.LoginDao;
 import domain.UserInstance;
 
 /**
@@ -40,7 +41,6 @@ public class RegistrationController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-	    JDInstanceService service = JDInstanceService.getInstance();
 
 		UserInstance user = new UserInstance();
 
@@ -109,7 +109,7 @@ public class RegistrationController extends HttpServlet {
 			return;
 		}
 
-		if (service.getUsers(null, null, null, email) != null) {
+		if (!LoginDao.checkUser(username) && LoginDao.checkEmail(email)) {
 
 			request.setAttribute("errorMessage",
 					"This e-mail is already exist. Please choose another.");
@@ -117,7 +117,7 @@ public class RegistrationController extends HttpServlet {
 					response);
 			return;
 
-		} else if (service.getUsers(username, null, null, null) != null) {
+		} else if (LoginDao.checkUser(username) && !LoginDao.checkEmail(email)) {
 
 			request.setAttribute("errorMessage",
 					"This Username is already exist. Please choose another.");
@@ -125,6 +125,13 @@ public class RegistrationController extends HttpServlet {
 					response);
 			return;
 
+		} else if (LoginDao.checkUser(username) && LoginDao.checkEmail(email)) {
+
+			request.setAttribute("errorMessage",
+					"This Username and E-mail are already exist. Please choose another.");
+			request.getRequestDispatcher("/registration.jsp").forward(request,
+					response);
+			return;
 		}
 
 		// Adding data to User

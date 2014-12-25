@@ -43,7 +43,7 @@ public class JDInstanceDAO {
 		{
 		    trans.rollback();
 		}
-		System.err.println(instance.getClass().getName() +" Save was unsuccessful. Rollback");
+		System.err.println("Save was unsuccessful. Rollback");
 		return false;
 	    }
             finally 
@@ -165,7 +165,7 @@ public class JDInstanceDAO {
         }
         
 
-        public static<T extends JDInstance> void removeSurveyInstance(int id, Class<T> instanceClass) throws HibernateException {
+        public static void removeSurveyInstance(int id, Class<JDInstance> instanceClass) throws HibernateException {
             Session session = null;
             try
 	    {
