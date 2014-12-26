@@ -49,7 +49,10 @@ public final class QuestionInstance implements JDInstance, Serializable {
     {
 	this.survey = survey;
     }
-
+    public SurveyInstance getSurvey()
+    {
+	return survey;
+    }
    
     public boolean addAnswer(AnswerInstance answer)
     {

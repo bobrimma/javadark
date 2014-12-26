@@ -37,27 +37,25 @@ public class QuestionController extends HttpServlet {
 		if (formName.equals("newquestion")) {
 			createQuestion(request, response);
 		} 
-		request.getRequestDispatcher("/newquestion.jsp").forward(request, response);
+		
 
 	}
 	protected void createQuestion(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		Retrievable ret = JDInstanceService.getInstance();
-		SurveyInstance surv=ret.getSurvey(Integer.parseInt(request.getParameter("survId")));
+		SurveyInstance surv=ret.getSurvey(Integer.parseInt(request.getParameter("survid")));
 		QuestionInstance question = new QuestionInstance(surv);
 		question.setName(request.getParameter("name"));
 		question.setDescription(request.getParameter("description"));
 		boolean isMultianswer=false;
 		if(request.getParameter("questiontype").equals("multi")){
 			isMultianswer=true;
-			question.isAllowMultipleAnswers();
+			question.setAllowMultipleAnswers(isMultianswer);
 		}
 		
 		JDInstanceDAO.saveIntoDB(question);
 		JDInstanceDAO.updateInDB(surv);
-		request.setAttribute("idSurv", surv.getId());
-		request.setAttribute("createdQuestionId", question.getId());
-
+		request.getRequestDispatcher("/survey-info.jsp?id="+surv.getId()).forward(request, response);
 	}
 	
 

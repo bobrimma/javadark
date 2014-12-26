@@ -15,7 +15,7 @@ import utils.StringUtilities;
  * Servlet implementation class PasswordRecoveryController
  * @author Kapitoha
  */
-@WebServlet("/PasswordRecoveryController")
+
 public class PasswordRecoveryController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

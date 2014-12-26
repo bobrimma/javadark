@@ -46,12 +46,20 @@
 		<servlet-name>RegistrationController</servlet-name>
 		<url-pattern>/RegistrationController</url-pattern>
 	</servlet-mapping>
-		<servlet>
+	<servlet>
 		<servlet-name>SurveysController</servlet-name>
 		<servlet-class>controller.SurveysController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>SurveysController</servlet-name>
 		<url-pattern>/SurveysController</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>PasswordRecoveryController</servlet-name>
+		<servlet-class>controller.PasswordRecoveryController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PasswordRecoveryController</servlet-name>
+		<url-pattern>/PasswordRecoveryController</url-pattern>
 	</servlet-mapping>
 </web-app>

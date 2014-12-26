@@ -241,6 +241,16 @@ public class JDInstanceService implements Retrievable, Actionable {
             session.close();
 	    return list;
 	}
+	@SuppressWarnings("unchecked")
+	
+	public int getCorAnswers(Integer questionId) {
+	    String query = "Select q FROM " +AnswerInstance.class.getSimpleName()+" q WHERE q.question = "+questionId+" and q.isCorrect=true";
+	    Session session = HibernateUtils.getSessionFactory().openSession();
+            Query que = session.createQuery(query);
+            List<AnswerInstance> list = que.list();
+            session.close();
+	    return list.size();
+	}
 	
 	public<T extends JDInstance> int getNextAllowedUnicId(Class<T> instanceClass)
 	{
@@ -258,6 +268,11 @@ public class JDInstanceService implements Retrievable, Actionable {
 	    UserInstance u = (UserInstance) query.uniqueResult();
 	    session.close();
 	    return u != null;
+	}
+
+	@Override
+	public QuestionInstance getQuestion(Integer id) {
+		return (QuestionInstance) JDInstanceDAO.retrieveFromDB(QuestionInstance.class, id);
 	}
 	
 

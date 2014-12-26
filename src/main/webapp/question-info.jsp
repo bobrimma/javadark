@@ -1,3 +1,4 @@
+<%@page import="domain.AnswerInstance"%>
 <%@page import="domain.SurveyInstance"%>
 <%@page import="service.JDInstanceService"%>
 <%@page import="service.Retrievable"%>
@@ -11,7 +12,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@ include file="/jspf/link.jspf"%>
-<title>Survey</title>
+<title>Question</title>
 </head>
 <style type="text/css">
 body {
@@ -28,12 +29,11 @@ body {
 .button-wide {
 	width: 205px;
 }
-
-textarea {
-	width: 270px;
-}
 form {
 	margin: 0 0 0;
+}
+textarea {
+	width: 270px;
 }
 </style>
 <body>
@@ -51,7 +51,7 @@ form {
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="#tab1" data-toggle="tab">General
 								info</a></li>
-						<li><a href="#tab2" data-toggle="tab">Questions</a></li>
+						<li><a href="#tab2" data-toggle="tab">Answers</a></li>
 					</ul>
 
 					<div class="tab-content">
@@ -64,37 +64,28 @@ form {
 								}
 							%>
 							<form action="/OpinionPoll/SurveysController" method="post">
-								<legend> Survey information </legend>
+								<legend> Question information </legend>
 								<%
 									Retrievable ret = JDInstanceService.getInstance();
-									SurveyInstance survey;
-									if (request.getParameter("id") != null) {
-										Integer id = Integer.parseInt(request.getParameter("id"));
-										survey = ret.getSurvey(id);
+									QuestionInstance question;
+									if (request.getParameter("qwid") != null) {
+										Integer id = Integer.parseInt(request.getParameter("qwid"));
+										question = ret.getQuestion(id);
 									} else {
-										survey = (SurveyInstance) request.getAttribute("survey");
+										question = (QuestionInstance) request.getAttribute("question");
 									}
 								%>
 								<label class="control-label" for="name">Name</label>
 								<div class="controls">
-									<textarea rows="2" name="name"><%=survey.getName()%></textarea>
+									<textarea rows="2" name="name"><%=question.getName()%></textarea>
 								</div>
 								<label class="control-label" for="description">Description</label>
 								<div class="controls">
-									<textarea rows="5" name="description"><%=survey.getDescription()%></textarea>
+									<textarea rows="5" name="description"><%=question.getDescription()%></textarea>
 								</div>
-								<label class="control-label" for="status">Status</label>
-								<div class="controls">
-									<label class="radio"> <input type="radio" name="status"
-										value="unpublished" <%if (!survey.isPublished()) {%> checked
-										<%}%>> Unpublished
-									</label> <label class="radio"> <input type="radio"
-										name="status" value="published"
-										<%if (survey.isPublished()) {%> checked <%}%>>Published
-									</label>
-								</div>
+								
 								<input type="hidden" name="formname" value="edit"> <input
-									type="hidden" name="id" value="<%=survey.getId()%>">
+									type="hidden" name="id" value="<%=question.getId()%>">
 								<%
 									if (request.getParameter("from") != null) {
 								%>
@@ -104,27 +95,28 @@ form {
 									}
 								%>
 								<div class="controls">
-									<button class="btn  button-wide btn-success" type="submit">Save</button>
+								<a href="survey-info.jsp?id=<%=question.getSurvey().getId()%>" class="btn"
+								type="button" style="width: 50px;">Back</a>
+									<button class="btn  button-wide btn-success inactive" type="submit">Save</button>
 								</div>
 							</form>
 
 						</div>
 						<div class="tab-pane" id="tab2">
 						<form method="post"
-									action="/OpinionPoll/question-new.jsp">
+									action="/OpinionPoll/answer-new.jsp">
 									<input type="hidden" name="from" value="search"> <input
-										type="hidden" name="survid" value=<%=survey.getId()%>>
-									<button type="submit" class="btn btn-link">Add new question</button>
+										type="hidden" name="qwid" value=<%=question.getId()%>>
+									<button type="submit" class="btn btn-link">Add new answer</button>
 								</form>
 							<%
-								List<QuestionInstance> questionsList = ret.getQuestions(survey
-										.getId());
-								if (questionsList.isEmpty()) {
+								List<AnswerInstance> answerList = ret.getAnswers(question.getId());
+								if (answerList.isEmpty()) {
 							%>
 							<div class="alert alert-error">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
 
-								There are no questions yet!
+								There are no answers yet!
 							</div>
 							<%
 								} else {
@@ -133,34 +125,25 @@ form {
 
 								<thead>
 									<tr>
-										<th>Name</th>
 										<th>Description</th>
-										<th>Type</th>
-										<th>Action</th>
+										<th>Correct</th>
 									</tr>
 								</thead>
 								<tbody>
+								
 									<%
-										for (QuestionInstance question : questionsList) {
+										for (AnswerInstance answer : answerList) {
+											String status = null;
+											if (answer.isCorrect())
+												status = "correct";
+											else
+												status = "incorrect";
 									%>
-									<tr>
-										<td><%=question.getName()%></td>
-										<td><%=question.getDescription()%></td>
-										<td>
-											<%
-												boolean multi = question.isAllowMultipleAnswers();
-														if (multi)
-															out.print("multianswer");
-														else
-															out.print("one answer");
-											%>
-										</td>
-										<td><form method="post"
-									action="/OpinionPoll/question-info.jsp">
-									<input type="hidden" name="from" value="search"> <input
-										type="hidden" name="qwid" value=<%=question.getId()%>>
-									<button type="submit" class="btn btn-link">edit</button>
-								</form></td>
+									
+									<tr <%if (status.equals("correct")) {%> class="success"
+							<%} else {%> class="error" <%}%>>
+										<td><%=answer.getAnswerDescription()%></td>
+										<td><%=status%></td>
 									</tr>
 									<%
 										}

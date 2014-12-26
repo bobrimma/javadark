@@ -49,7 +49,7 @@ form {
 		<div class="row">
 			<div class="span2">
 				<ul class="nav nav-tabs nav-stacked">
-					<li class="active"><a href="">Published</a></li>
+					<li class="active"><a href="#">Published</a></li>
 					<li><a href="/OpinionPoll/surveys-unpublished.jsp">Unpublished</a></li>
 				</ul>
 			</div>

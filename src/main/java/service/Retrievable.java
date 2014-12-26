@@ -29,4 +29,6 @@ public interface Retrievable {
     public List<QuestionInstance> getQuestions(Integer surveyId);
     public List<AnswerInstance> getAnswers(Integer questionId);
     public<T extends JDInstance> int getNextAllowedUnicId(Class<T> instanceClass);
+    public int getCorAnswers(Integer questionId);
+    public QuestionInstance getQuestion(Integer id);
 }
